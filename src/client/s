@@ -1,0 +1,2513 @@
+$(function () {
+  $('#joingroupbtn').click(function (e) {
+    url = '/j/group/' + $(this).attr('name') + '/join';
+    if (window._USER_ABNORMAL) {
+      e.preventDefault()
+      window.show_abnormal && window.show_abnormal()
+      return
+    }
+    $.post_withck(url, {
+    }, function (sjson) {
+      var ret = eval('(' + sjson + ')');
+      $('#joingroupbtn').hide();
+      if (ret.result == 'toomany') {
+        $('#replysect').html('<p class="attn" align="right">你已经加入了500个小组，无法再加入更多小组。</p>');
+      } else {
+        $('#replysect').html('<br/><h2>你现在加入了这个小组，可以发表回应</h2><div class="txd comment-form"><form name="comment_form" method="post" action="add_comment"><textarea name="rv_comment" rows="8" cols="54"></textarea><br/><input type="hidden" name="start" value="0"/><span class="bn-flat-hot rr"><input type="submit" value="发送"/></span><span><label class="pl share-label share-shuo"><input type="checkbox" name="sync_to_mb"/>转发到广播 </label> </span></form></div>');
+      }
+    });
+    return false;
+  });
+  $('.topic-reply li').bind('mouseenter mouseleave click', function (e) {
+    var $this = $(this),
+    comment_user_id = $this.find('.operation_div').attr('id'),
+    can_delete = 0;
+    if (comment_user_id == 103616459) {
+      can_delete = 1;
+    }
+    if (can_delete == 1) {
+      $this.find('.lnk-delete-comment').show();
+    }
+    switch (e.type) {
+      case 'mouseenter':
+        $this.find('.operation-more').show();
+        break;
+      case 'mouseleave':
+        $this.find('.operation-more').hide();
+        break;
+    }
+  });
+  $('body').delegate('.reply-comment .lnk-close', 'click', function (e) {
+    e.preventDefault();
+    $(this).parent().remove();
+  });
+});
+;
+$('.cmt-img img').bind('click', function () {
+  var t = $(this);
+  t.attr('raw-style') ? (t.attr('style', t.attr('raw-style')), t.removeAttr('raw-style'), t.parent().removeClass('cmt-img-large'))  : (t.attr('raw-style', t.attr('style')), t.removeAttr('style'), t.parent().addClass('cmt-img-large'))
+}); ;
+!function (t) {
+  function e(o) {
+    if (n[o]) return n[o].exports;
+    var i = n[o] = {
+      i: o,
+      l: !1,
+      exports: {
+      }
+    };
+    return t[o].call(i.exports, i, i.exports, e),
+    i.l = !0,
+    i.exports
+  }
+  var n = {
+  };
+  e.m = t,
+  e.c = n,
+  e.d = function (t, n, o) {
+    e.o(t, n) || Object.defineProperty(t, n, {
+      configurable: !1,
+      enumerable: !0,
+      get: o
+    })
+  },
+  e.n = function (t) {
+    var n = t && t.__esModule ? function () {
+      return t.default
+    }
+    : function () {
+      return t
+    };
+    return e.d(n, 'a', n),
+    n
+  },
+  e.o = function (t, e) {
+    return Object.prototype.hasOwnProperty.call(t, e)
+  },
+  e.p = '',
+  e(e.s = 23)
+}({
+  10: function (t, e, n) {
+    'use strict';
+    function o(t) {
+      if (arguments.length > 1 && void 0 !== arguments[1] && arguments[1], void 0 !== t && null != t) {
+        if (!(this instanceof o)) return new o(t);
+        t.getAttribute('data-inited') || (this.options = {
+          el: t,
+          container: t.parentNode,
+          prefetch: Boolean(t.getAttribute('prefetch')),
+          previewUrl: t.getAttribute('src'),
+          originUrl: t.getAttribute('data-original-url')
+        }, this._fetchUrl = this.options.originUrl, this.init())
+      }
+    }
+    Object.defineProperty(e, '__esModule', {
+      value: !0
+    });
+    var i = n(11),
+    a = function (t) {
+      return t && t.__esModule ? t : {
+      default:
+        t
+      }
+    }(i);
+    o.prototype.prefetch = function (t) {
+      if (t && this.options.prefetch) {
+        var e = document.createElement('link');
+        e.rel = 'prefetch',
+        e.href = t;
+        var n = document.getElementsByTagName('link') [0];
+        n.parentNode.insertBefore(e, n)
+      }
+    },
+    o.prototype.play = function () {
+      this.options.el.src = this._fetchUrl,
+      this._buttonPlay.style.display = 'none',
+      this._buttonReload.style.display = 'none',
+      this._loading.style.display = 'block'
+    },
+    o.prototype.reload = function () {
+      this._buttonPlay.style.display = 'none',
+      this._buttonReload.style.display = 'none',
+      this._loading.style.display = 'block';
+      var t = this.options.originUrl,
+      e = '_r=' + Math.random();
+      this._fetchUrl = t.indexOf('?') + 1 ? t + '&' + e : t + '?' + e,
+      this.play()
+    },
+    o.prototype.loaded = function (t) {
+      var e = this.options,
+      t = e.el,
+      n = e.container;
+      t.src === this._fetchUrl && (this._buttonPlay_click.remove(), this._buttonReload_click.remove(), this._img_load_error.remove(), this._img_load.remove(), n.removeChild(this._panel))
+    },
+    o.prototype.notFound = function () {
+      var t = this.options,
+      e = t.el,
+      n = t.previewUrl;
+      e.src = n,
+      this._buttonPlay.style.display = 'none',
+      this._buttonReload.style.display = 'block',
+      this._loading.style.display = 'none'
+    },
+    o.prototype.init = function () {
+      var t = this,
+      e = this.options,
+      n = e.el,
+      o = e.container,
+      i = (e.originUrl, this._panel = document.createElement('div'));
+      i.className = 'image-gif-panel',
+      i.innerHTML = '\n    <div class="image-gif-panel-inner">\n      <a href="javascript:;" class="image-gif-button-play">GIF</a>\n      <a href="javascript:;" class="image-gif-button-reload" style="display: none">重新加载</a>\n      <span class="image-gif-loading" style="display: none;">加载中</span>\n    </div>\n  ',
+      o.appendChild(i),
+      this._buttonPlay = i.getElementsByClassName('image-gif-button-play') [0],
+      this._buttonReload = i.getElementsByClassName('image-gif-button-reload') [0],
+      this._loading = i.getElementsByClassName('image-gif-loading') [0],
+      this.prefetch(this._fetchUrl);
+      var r = function (e) {
+        return function (n) {
+          n.preventDefault ? n.preventDefault()  : n.returnValue = !1,
+          e.call(t, n.target || n.srcElement, n.loaded ? n.loaded / n.total : - 1)
+        }
+      };
+      this._buttonPlay_click = (0, a.default) (this._buttonPlay, 'click', r(this.play)), this._buttonReload_click = (0, a.default) (this._buttonReload, 'click', r(this.reload)), this._img_load = (0, a.default) (n, 'load', r(this.loaded)), this._img_load_error = (0, a.default) (n, 'error', r(this.notFound)), n.setAttribute('data-inited', !0)
+    }, e.default = o
+  }, 11: function (t, e, n) {
+    'use strict';
+    Object.defineProperty(e, '__esModule', {
+      value: !0
+    }),
+    e.default = function (t, e, n) {
+      return t.addEventListener ? (t.addEventListener(e, n, !1), {
+        remove: function () {
+          t.removeEventListener(e, n, !1)
+        }
+      })  : t.attachEvent ? (t.attachEvent('on' + e, n), {
+        remove: function () {
+          t.detachEvent('on' + e, n)
+        }
+      })  : void 0
+    }
+  },
+  23: function (t, e, n) {
+    'use strict';
+    Object.defineProperty(e, '__esModule', {
+      value: !0
+    });
+    var o = n(7),
+    i = n.n(o),
+    a = n(24);
+    n.n(a),
+    window._IMAGE_GIF_RENDER = i.a
+  },
+  24: function (t, e) {
+  },
+  7: function (t, e, n) {
+    'use strict';
+    Object.defineProperty(e, '__esModule', {
+      value: !0
+    });
+    var o = n(8),
+    i = function (t) {
+      return t && t.__esModule ? t : {
+      default:
+        t
+      }
+    }(o);
+    e.default = i.default
+  },
+  8:
+  function (t, e, n) {
+    'use strict';
+    function o(t) {
+      return t && t.__esModule ? t : {
+      default:
+        t
+      }
+    }
+    function i() {
+      a = [
+      ];
+      for (var t, e = document.querySelectorAll('img[data-render-type=gif]'), n = 0; t = e[n]; ) a.push((0, c.default) (t)), n++; if ('object' === (void 0 === r ? 'undefined' : l(r)) && 'preloadNum' in r) for (var o = r.preloadNum; o--; ) a[o] && a[o].play()
+    }
+    Object.defineProperty(e, '__esModule', {
+      value: !0
+    });
+    var a,
+    r,
+    l = 'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator ? function (t) {
+      return typeof t
+    }
+     : function (t) {
+      return t && 'function' == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? 'symbol' : typeof t
+    },
+    s = n(9),
+    u = o(s),
+    d = n(10),
+    c = o(d);
+    e.default = function (t) {
+      r = t,
+      (0, u.default) (i)
+    }
+  },
+  9:
+  function (t, e) {
+    t.exports = function (t) {
+      'complete' === document.readyState || 'interactive' === document.readyState ? t.call()  : document.attachEvent ? document.attachEvent('onreadystatechange', function () {
+        'interactive' === document.readyState && t.call()
+      })  : document.addEventListener && document.addEventListener('DOMContentLoaded', t)
+    }
+  }
+});
+!function (t) {
+  function e(n) {
+    if (r[n]) return r[n].exports;
+    var o = r[n] = {
+      i: n,
+      l: !1,
+      exports: {
+      }
+    };
+    return t[n].call(o.exports, o, o.exports, e),
+    o.l = !0,
+    o.exports
+  }
+  var r = {
+  };
+  e.m = t,
+  e.c = r,
+  e.d = function (t, r, n) {
+    e.o(t, r) || Object.defineProperty(t, r, {
+      configurable: !1,
+      enumerable: !0,
+      get: n
+    })
+  },
+  e.n = function (t) {
+    var r = t && t.__esModule ? function () {
+      return t.default
+    }
+    : function () {
+      return t
+    };
+    return e.d(r, 'a', r),
+    r
+  },
+  e.o = function (t, e) {
+    return Object.prototype.hasOwnProperty.call(t, e)
+  },
+  e.p = '',
+  e(e.s = 12)
+}([function (t, e) {
+  t.exports = React
+},
+function (t, e) {
+  t.exports = ReactDOM
+},
+function (t, e, r) {
+  'use strict';
+  function n(t) {
+    return null !== t && 'object' === (void 0 === t ? 'undefined' : o(t))
+  }
+  var o = 'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator ? function (t) {
+    return typeof t
+  }
+   : function (t) {
+    return t && 'function' == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? 'symbol' : typeof t
+  };
+  t.exports = n
+},
+,
+function (t, e, r) {
+  function n() {
+  }
+  function o(t) {
+    if (!m(t)) return t;
+    var e = [
+    ];
+    for (var r in t) i(e, r, t[r]);
+    return e.join('&')
+  }
+  function i(t, e, r) {
+    if (null != r) if (Array.isArray(r)) r.forEach(function (r) {
+      i(t, e, r)
+    });
+     else if (m(r)) for (var n in r) i(t, e + '[' + n + ']', r[n]);
+     else t.push(encodeURIComponent(e) + '=' + encodeURIComponent(r));
+     else null === r && t.push(encodeURIComponent(e))
+  }
+  function s(t) {
+    for (var e, r, n = {
+    }, o = t.split('&'), i = 0, s = o.length; i < s; ++i) e = o[i],
+    r = e.indexOf('='),
+    - 1 == r ? n[decodeURIComponent(e)] = '' : n[decodeURIComponent(e.slice(0, r))] = decodeURIComponent(e.slice(r + 1));
+    return n
+  }
+  function a(t) {
+    for (var e, r, n, o, i = t.split(/\r?\n/), s = {
+    }, a = 0, u = i.length; a < u; ++a) r = i[a],
+    - 1 !== (e = r.indexOf(':')) && (n = r.slice(0, e).toLowerCase(), o = w(r.slice(e + 1)), s[n] = o);
+    return s
+  }
+  function u(t) {
+    return /[\/+]json($|[^-\w])/.test(t)
+  }
+  function l(t) {
+    this.req = t,
+    this.xhr = this.req.xhr,
+    this.text = 'HEAD' != this.req.method && ('' === this.xhr.responseType || 'text' === this.xhr.responseType) || void 0 === this.xhr.responseType ? this.xhr.responseText : null,
+    this.statusText = this.req.xhr.statusText;
+    var e = this.xhr.status;
+    1223 === e && (e = 204),
+    this._setStatusProperties(e),
+    this.header = this.headers = a(this.xhr.getAllResponseHeaders()),
+    this.header['content-type'] = this.xhr.getResponseHeader('content-type'),
+    this._setHeaderProperties(this.header),
+    null === this.text && t._responseType ? this.body = this.xhr.response : this.body = 'HEAD' != this.req.method ? this._parseBody(this.text ? this.text : this.xhr.response)  : null
+  }
+  function c(t, e) {
+    var r = this;
+    this._query = this._query || [
+    ],
+    this.method = t,
+    this.url = e,
+    this.header = {
+    },
+    this._header = {
+    },
+    this.on('end', function () {
+      var t = null,
+      e = null;
+      try {
+        e = new l(r)
+      } catch (e) {
+        return t = new Error('Parser is unable to parse the response'),
+        t.parse = !0,
+        t.original = e,
+        r.xhr ? (t.rawResponse = void 0 === r.xhr.responseType ? r.xhr.responseText : r.xhr.response, t.status = r.xhr.status ? r.xhr.status : null, t.statusCode = t.status)  : (t.rawResponse = null, t.status = null),
+        r.callback(t)
+      }
+      r.emit('response', e);
+      var n;
+      try {
+        r._isResponseOK(e) || (n = new Error(e.statusText || 'Unsuccessful HTTP response'))
+      } catch (t) {
+        n = t
+      }
+      n ? (n.original = t, n.response = e, n.status = e.status, r.callback(n, e))  : r.callback(null, e)
+    })
+  }
+  function p(t, e, r) {
+    var n = v('DELETE', t);
+    return 'function' == typeof e && (r = e, e = null),
+    e && n.send(e),
+    r && n.end(r),
+    n
+  }
+  var h,
+  f = 'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator ? function (t) {
+    return typeof t
+  }
+   : function (t) {
+    return t && 'function' == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? 'symbol' : typeof t
+  };
+  'undefined' != typeof window ? h = window : 'undefined' != typeof self ? h = self : (console.warn('Using browser-only version of superagent in non-browser environment'), h = this);
+  var d = r(13),
+  y = r(14),
+  m = r(2),
+  _ = r(15),
+  b = r(17),
+  v = e = t.exports = function (t, r) {
+    return 'function' == typeof r ? new e.Request('GET', t).end(r)  : 1 == arguments.length ? new e.Request('GET', t)  : new e.Request(t, r)
+  };
+  e.Request = c,
+  v.getXHR = function () {
+    if (!(!h.XMLHttpRequest || h.location && 'file:' == h.location.protocol && h.ActiveXObject)) return new XMLHttpRequest;
+    try {
+      return new ActiveXObject('Microsoft.XMLHTTP')
+    } catch (t) {
+    }
+    try {
+      return new ActiveXObject('Msxml2.XMLHTTP.6.0')
+    } catch (t) {
+    }
+    try {
+      return new ActiveXObject('Msxml2.XMLHTTP.3.0')
+    } catch (t) {
+    }
+    try {
+      return new ActiveXObject('Msxml2.XMLHTTP')
+    } catch (t) {
+    }
+    throw Error('Browser-only version of superagent could not find XHR')
+  };
+  var w = ''.trim ? function (t) {
+    return t.trim()
+  }
+   : function (t) {
+    return t.replace(/(^\s*|\s*$)/g, '')
+  };
+  v.serializeObject = o,
+  v.parseString = s,
+  v.types = {
+    html: 'text/html',
+    json: 'application/json',
+    xml: 'text/xml',
+    urlencoded: 'application/x-www-form-urlencoded',
+    form: 'application/x-www-form-urlencoded',
+    'form-data': 'application/x-www-form-urlencoded'
+  },
+  v.serialize = {
+    'application/x-www-form-urlencoded': o,
+    'application/json': JSON.stringify
+  },
+  v.parse = {
+    'application/x-www-form-urlencoded': s,
+    'application/json': JSON.parse
+  },
+  _(l.prototype),
+  l.prototype._parseBody = function (t) {
+    var e = v.parse[this.type];
+    return this.req._parser ? this.req._parser(this, t)  : (!e && u(this.type) && (e = v.parse['application/json']), e && t && (t.length || t instanceof Object) ? e(t)  : null)
+  },
+  l.prototype.toError = function () {
+    var t = this.req,
+    e = t.method,
+    r = t.url,
+    n = 'cannot ' + e + ' ' + r + ' (' + this.status + ')',
+    o = new Error(n);
+    return o.status = this.status,
+    o.method = e,
+    o.url = r,
+    o
+  },
+  v.Response = l,
+  d(c.prototype),
+  y(c.prototype),
+  c.prototype.type = function (t) {
+    return this.set('Content-Type', v.types[t] || t),
+    this
+  },
+  c.prototype.accept = function (t) {
+    return this.set('Accept', v.types[t] || t),
+    this
+  },
+  c.prototype.auth = function (t, e, r) {
+    1 === arguments.length && (e = ''),
+    'object' === (void 0 === e ? 'undefined' : f(e)) && null !== e && (r = e, e = ''),
+    r || (r = {
+      type: 'function' == typeof btoa ? 'basic' : 'auto'
+    });
+    var n = function (t) {
+      if ('function' == typeof btoa) return btoa(t);
+      throw new Error('Cannot use basic auth, btoa is not a function')
+    };
+    return this._auth(t, e, r, n)
+  },
+  c.prototype.query = function (t) {
+    return 'string' != typeof t && (t = o(t)),
+    t && this._query.push(t),
+    this
+  },
+  c.prototype.attach = function (t, e, r) {
+    if (e) {
+      if (this._data) throw Error('superagent can\'t mix .send() and .attach()');
+      this._getFormData().append(t, e, r || e.name)
+    }
+    return this
+  },
+  c.prototype._getFormData = function () {
+    return this._formData || (this._formData = new h.FormData),
+    this._formData
+  },
+  c.prototype.callback = function (t, e) {
+    if (this._shouldRetry(t, e)) return this._retry();
+    var r = this._callback;
+    this.clearTimeout(),
+    t && (this._maxRetries && (t.retries = this._retries - 1), this.emit('error', t)),
+    r(t, e)
+  },
+  c.prototype.crossDomainError = function () {
+    var t = new Error('Request has been terminated\nPossible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.');
+    t.crossDomain = !0,
+    t.status = this.status,
+    t.method = this.method,
+    t.url = this.url,
+    this.callback(t)
+  },
+  c.prototype.buffer = c.prototype.ca = c.prototype.agent = function () {
+    return console.warn('This is not supported in browser version of superagent'),
+    this
+  },
+  c.prototype.pipe = c.prototype.write = function () {
+    throw Error('Streaming is not supported in browser version of superagent')
+  },
+  c.prototype._isHost = function (t) {
+    return t && 'object' === (void 0 === t ? 'undefined' : f(t)) && !Array.isArray(t) && '[object Object]' !== Object.prototype.toString.call(t)
+  },
+  c.prototype.end = function (t) {
+    return this._endCalled && console.warn('Warning: .end() was called twice. This is not supported in superagent'),
+    this._endCalled = !0,
+    this._callback = t || n,
+    this._finalizeQueryString(),
+    this._end()
+  },
+  c.prototype._end = function () {
+    var t = this,
+    e = this.xhr = v.getXHR(),
+    r = this._formData || this._data;
+    this._setTimeouts(),
+    e.onreadystatechange = function () {
+      var r = e.readyState;
+      if (r >= 2 && t._responseTimeoutTimer && clearTimeout(t._responseTimeoutTimer), 4 == r) {
+        var n;
+        try {
+          n = e.status
+        } catch (t) {
+          n = 0
+        }
+        if (!n) {
+          if (t.timedout || t._aborted) return;
+          return t.crossDomainError()
+        }
+        t.emit('end')
+      }
+    };
+    var n = function (e, r) {
+      r.total > 0 && (r.percent = r.loaded / r.total * 100),
+      r.direction = e,
+      t.emit('progress', r)
+    };
+    if (this.hasListeners('progress')) try {
+      e.onprogress = n.bind(null, 'download'),
+      e.upload && (e.upload.onprogress = n.bind(null, 'upload'))
+    } catch (t) {
+    }
+    try {
+      this.username && this.password ? e.open(this.method, this.url, !0, this.username, this.password)  : e.open(this.method, this.url, !0)
+    } catch (t) {
+      return this.callback(t)
+    }
+    if (this._withCredentials && (e.withCredentials = !0), !this._formData && 'GET' != this.method && 'HEAD' != this.method && 'string' != typeof r && !this._isHost(r)) {
+      var o = this._header['content-type'],
+      i = this._serializer || v.serialize[o ? o.split(';') [0] : ''];
+      !i && u(o) && (i = v.serialize['application/json']),
+      i && (r = i(r))
+    }
+    for (var s in this.header) null != this.header[s] && this.header.hasOwnProperty(s) && e.setRequestHeader(s, this.header[s]);
+    return this._responseType && (e.responseType = this._responseType),
+    this.emit('request', this),
+    e.send(void 0 !== r ? r : null),
+    this
+  },
+  v.agent = function () {
+    return new b
+  },
+  [
+    'GET',
+    'POST',
+    'OPTIONS',
+    'PATCH',
+    'PUT',
+    'DELETE'
+  ].forEach(function (t) {
+    b.prototype[t.toLowerCase()] = function (e, r) {
+      var n = new v.Request(t, e);
+      return this._setDefaults(n),
+      r && n.end(r),
+      n
+    }
+  }),
+  b.prototype.del = b.prototype.delete ,
+  v.get = function (t, e, r) {
+    var n = v('GET', t);
+    return 'function' == typeof e && (r = e, e = null),
+    e && n.query(e),
+    r && n.end(r),
+    n
+  },
+  v.head = function (t, e, r) {
+    var n = v('HEAD', t);
+    return 'function' == typeof e && (r = e, e = null),
+    e && n.query(e),
+    r && n.end(r),
+    n
+  },
+  v.options = function (t, e, r) {
+    var n = v('OPTIONS', t);
+    return 'function' == typeof e && (r = e, e = null),
+    e && n.send(e),
+    r && n.end(r),
+    n
+  },
+  v.del = p,
+  v.delete = p,
+  v.patch = function (t, e, r) {
+    var n = v('PATCH', t);
+    return 'function' == typeof e && (r = e, e = null),
+    e && n.send(e),
+    r && n.end(r),
+    n
+  },
+  v.post = function (t, e, r) {
+    var n = v('POST', t);
+    return 'function' == typeof e && (r = e, e = null),
+    e && n.send(e),
+    r && n.end(r),
+    n
+  },
+  v.put = function (t, e, r) {
+    var n = v('PUT', t);
+    return 'function' == typeof e && (r = e, e = null),
+    e && n.send(e),
+    r && n.end(r),
+    n
+  }
+},
+function (t, e, r) {
+  'use strict';
+  r.d(e, 'l', function () {
+    return n
+  }),
+  r.d(e, 'i', function () {
+    return o
+  }),
+  r.d(e, 'j', function () {
+    return i
+  }),
+  r.d(e, 'g', function () {
+    return s
+  }),
+  r.d(e, 'k', function () {
+    return a
+  }),
+  r.d(e, 'm', function () {
+    return u
+  }),
+  r.d(e, 'h', function () {
+    return l
+  }),
+  r.d(e, 'd', function () {
+    return c
+  }),
+  r.d(e, 'e', function () {
+    return p
+  }),
+  r.d(e, 'b', function () {
+    return h
+  }),
+  r.d(e, 'c', function () {
+    return f
+  }),
+  r.d(e, 'f', function () {
+    return d
+  }),
+  r.d(e, 'a', function () {
+    return y
+  });
+  var n = '/j/group/topic/add_photo',
+  o = '/j/group/topic/preview',
+  i = '/j/group/topic/publish',
+  s = '/j/group/topic/fetch_photo',
+  a = '//www.douban.com/j/note/get_subject_info',
+  u = '//www.douban.com/j/note/get_video_info',
+  l = 'https://m.douban.com/rexxar/api/v2/ceorl/poll',
+  c = 70,
+  p = 0,
+  h = 'photo_url',
+  f = window._UPLOAD_FILENAME || 'image_file',
+  d = window._POST_PARAMS && _POST_PARAMS.siteCookie,
+  y = function (t) {
+    var e = t + '=',
+    r = document.cookie.split(';'),
+    n = void 0,
+    o = void 0;
+    for (n = 0; n < r.length; n++) {
+      for (o = r[n]; ' ' == o.charAt(0); ) o = o.substring(1, o.length);
+      if (0 === o.indexOf(e)) return o.substring(e.length, o.length).replace(/\"/g, '')
+    }
+    return null
+  }('ck')
+},
+,
+,
+,
+,
+,
+,
+function (t, e, r) {
+  'use strict';
+  function n(t, e) {
+    if (!(t instanceof e)) throw new TypeError('Cannot call a class as a function')
+  }
+  function o(t, e) {
+    if (!t) throw new ReferenceError('this hasn\'t been initialised - super() hasn\'t been called');
+    return !e || 'object' != typeof e && 'function' != typeof e ? t : e
+  }
+  function i(t, e) {
+    if ('function' != typeof e && null !== e) throw new TypeError('Super expression must either be null or a function, not ' + typeof e);
+    t.prototype = Object.create(e && e.prototype, {
+      constructor: {
+        value: t,
+        enumerable: !1,
+        writable: !0,
+        configurable: !0
+      }
+    }),
+    e && (Object.setPrototypeOf ? Object.setPrototypeOf(t, e)  : t.__proto__ = e)
+  }
+  function s(t, e) {
+    f.a.get(m.h + '/' + t).query({
+      ck: m.a
+    }).withCredentials().then(function (t) {
+      t && t.body && e && e(t.body)
+    })
+  }
+  function a(t) {
+    return function (e) {
+      function r(t) {
+        n(this, r);
+        var i = o(this, e.call(this, t));
+        return i.state = {
+          data: t.data,
+          group: t.group
+        },
+        i
+      }
+      return i(r, e),
+      r.prototype.votePost = function (t) {
+        var e = this,
+        r = this.state.data.id;
+        f.a.post(m.h + '/' + r + '/vote').query({
+          ck: m.a
+        }).type('form').send({
+          option_ids: t.join(',')
+        }).withCredentials().then(function (t) {
+          t && t.body && e.setState({
+            data: t.body
+          })
+        })
+      },
+      r.prototype.handleVoteOption = function (t) {
+        this.state.group.is_member ? this.votePost(t)  : window._JOIN_POPUP_DIALOG()
+      },
+      r.prototype.render = function () {
+        var e = this.state,
+        r = e.data,
+        n = e.group;
+        return r ? c.a.createElement('div', null, n.is_member ? null : c.a.createElement('div', {
+          className: 'poll-warn'
+        }, '加入 ', n.title, ' 小组即可投票'), c.a.createElement(t, {
+          data: r,
+          voteOption: this.handleVoteOption.bind(this)
+        }))  : null
+      },
+      r
+    }(l.Component)
+  }
+  function u(t) {
+    var e = document.querySelectorAll('[data-entity-type=poll]');
+    Array.prototype.slice.call(e).forEach(function (e) {
+      var r = e.getAttribute('data-id');
+      r = parseInt(r);
+      var n = e.querySelectorAll('[data-reactroot]');
+      'number' == typeof r && 0 === n.length && s(r, function (n) {
+        var o = a(y.a);
+        Object(p.render) (c.a.createElement(o, {
+          id: r,
+          data: n,
+          group: t
+        }), e)
+      })
+    })
+  }
+  Object.defineProperty(e, '__esModule', {
+    value: !0
+  }),
+  e.default = u;
+  var l = r(0),
+  c = r.n(l),
+  p = r(1),
+  h = (r.n(p), r(4)),
+  f = r.n(h),
+  d = r(18),
+  y = r.n(d),
+  m = r(5),
+  _ = r(20);
+  r.n(_),
+  window._POLL_RENDER = u
+},
+function (t, e, r) {
+  function n(t) {
+    if (t) return o(t)
+  }
+  function o(t) {
+    for (var e in n.prototype) t[e] = n.prototype[e];
+    return t
+  }
+  t.exports = n,
+  n.prototype.on = n.prototype.addEventListener = function (t, e) {
+    return this._callbacks = this._callbacks || {
+    },
+    (this._callbacks['$' + t] = this._callbacks['$' + t] || [
+    ]).push(e),
+    this
+  },
+  n.prototype.once = function (t, e) {
+    function r() {
+      this.off(t, r),
+      e.apply(this, arguments)
+    }
+    return r.fn = e,
+    this.on(t, r),
+    this
+  },
+  n.prototype.off = n.prototype.removeListener = n.prototype.removeAllListeners = n.prototype.removeEventListener = function (t, e) {
+    if (this._callbacks = this._callbacks || {
+    }, 0 == arguments.length) return this._callbacks = {
+    },
+    this;
+    var r = this._callbacks['$' + t];
+    if (!r) return this;
+    if (1 == arguments.length) return delete this._callbacks['$' + t],
+    this;
+    for (var n, o = 0; o < r.length; o++) if ((n = r[o]) === e || n.fn === e) {
+      r.splice(o, 1);
+      break
+    }
+    return this
+  },
+  n.prototype.emit = function (t) {
+    this._callbacks = this._callbacks || {
+    };
+    var e = [
+    ].slice.call(arguments, 1),
+    r = this._callbacks['$' + t];
+    if (r) {
+      r = r.slice(0);
+      for (var n = 0, o = r.length; n < o; ++n) r[n].apply(this, e)
+    }
+    return this
+  },
+  n.prototype.listeners = function (t) {
+    return this._callbacks = this._callbacks || {
+    },
+    this._callbacks['$' + t] || [
+    ]
+  },
+  n.prototype.hasListeners = function (t) {
+    return !!this.listeners(t).length
+  }
+},
+function (t, e, r) {
+  'use strict';
+  function n(t) {
+    if (t) return o(t)
+  }
+  function o(t) {
+    for (var e in n.prototype) t[e] = n.prototype[e];
+    return t
+  }
+  var i = 'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator ? function (t) {
+    return typeof t
+  }
+   : function (t) {
+    return t && 'function' == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? 'symbol' : typeof t
+  },
+  s = r(2);
+  t.exports = n,
+  n.prototype.clearTimeout = function () {
+    return clearTimeout(this._timer),
+    clearTimeout(this._responseTimeoutTimer),
+    delete this._timer,
+    delete this._responseTimeoutTimer,
+    this
+  },
+  n.prototype.parse = function (t) {
+    return this._parser = t,
+    this
+  },
+  n.prototype.responseType = function (t) {
+    return this._responseType = t,
+    this
+  },
+  n.prototype.serialize = function (t) {
+    return this._serializer = t,
+    this
+  },
+  n.prototype.timeout = function (t) {
+    if (!t || 'object' !== (void 0 === t ? 'undefined' : i(t))) return this._timeout = t,
+    this._responseTimeout = 0,
+    this;
+    for (var e in t) switch (e) {
+      case 'deadline':
+        this._timeout = t.deadline;
+        break;
+      case 'response':
+        this._responseTimeout = t.response;
+        break;
+      default:
+        console.warn('Unknown timeout option', e)
+    }
+    return this
+  },
+  n.prototype.retry = function (t, e) {
+    return 0 !== arguments.length && !0 !== t || (t = 1),
+    t <= 0 && (t = 0),
+    this._maxRetries = t,
+    this._retries = 0,
+    this._retryCallback = e,
+    this
+  };
+  var a = [
+    'ECONNRESET',
+    'ETIMEDOUT',
+    'EADDRINFO',
+    'ESOCKETTIMEDOUT'
+  ];
+  n.prototype._shouldRetry = function (t, e) {
+    if (!this._maxRetries || this._retries++ >= this._maxRetries) return !1;
+    if (this._retryCallback) try {
+      var r = this._retryCallback(t, e);
+      if (!0 === r) return !0;
+      if (!1 === r) return !1
+    } catch (t) {
+      console.error(t)
+    }
+    if (e && e.status && e.status >= 500 && 501 != e.status) return !0;
+    if (t) {
+      if (t.code && ~a.indexOf(t.code)) return !0;
+      if (t.timeout && 'ECONNABORTED' == t.code) return !0;
+      if (t.crossDomain) return !0
+    }
+    return !1
+  },
+  n.prototype._retry = function () {
+    return this.clearTimeout(),
+    this.req && (this.req = null, this.req = this.request()),
+    this._aborted = !1,
+    this.timedout = !1,
+    this._end()
+  },
+  n.prototype.then = function (t, e) {
+    if (!this._fullfilledPromise) {
+      var r = this;
+      this._endCalled && console.warn('Warning: superagent request was sent twice, because both .end() and .then() were called. Never call .end() if you use promises'),
+      this._fullfilledPromise = new Promise(function (t, e) {
+        r.end(function (r, n) {
+          r ? e(r)  : t(n)
+        })
+      })
+    }
+    return this._fullfilledPromise.then(t, e)
+  },
+  n.prototype.catch = function (t) {
+    return this.then(void 0, t)
+  },
+  n.prototype.use = function (t) {
+    return t(this),
+    this
+  },
+  n.prototype.ok = function (t) {
+    if ('function' != typeof t) throw Error('Callback required');
+    return this._okCallback = t,
+    this
+  },
+  n.prototype._isResponseOK = function (t) {
+    return !!t && (this._okCallback ? this._okCallback(t)  : t.status >= 200 && t.status < 300)
+  },
+  n.prototype.get = function (t) {
+    return this._header[t.toLowerCase()]
+  },
+  n.prototype.getHeader = n.prototype.get,
+  n.prototype.set = function (t, e) {
+    if (s(t)) {
+      for (var r in t) this.set(r, t[r]);
+      return this
+    }
+    return this._header[t.toLowerCase()] = e,
+    this.header[t] = e,
+    this
+  },
+  n.prototype.unset = function (t) {
+    return delete this._header[t.toLowerCase()],
+    delete this.header[t],
+    this
+  },
+  n.prototype.field = function (t, e) {
+    if (null === t || void 0 === t) throw new Error('.field(name, val) name can not be empty');
+    if (this._data && console.error('.field() can\'t be used if .send() is used. Please use only .send() or only .field() & .attach()'), s(t)) {
+      for (var r in t) this.field(r, t[r]);
+      return this
+    }
+    if (Array.isArray(e)) {
+      for (var n in e) this.field(t, e[n]);
+      return this
+    }
+    if (null === e || void 0 === e) throw new Error('.field(name, val) val can not be empty');
+    return 'boolean' == typeof e && (e = '' + e),
+    this._getFormData().append(t, e),
+    this
+  },
+  n.prototype.abort = function () {
+    return this._aborted ? this : (this._aborted = !0, this.xhr && this.xhr.abort(), this.req && this.req.abort(), this.clearTimeout(), this.emit('abort'), this)
+  },
+  n.prototype._auth = function (t, e, r, n) {
+    switch (r.type) {
+      case 'basic':
+        this.set('Authorization', 'Basic ' + n(t + ':' + e));
+        break;
+      case 'auto':
+        this.username = t,
+        this.password = e;
+        break;
+      case 'bearer':
+        this.set('Authorization', 'Bearer ' + t)
+    }
+    return this
+  },
+  n.prototype.withCredentials = function (t) {
+    return void 0 == t && (t = !0),
+    this._withCredentials = t,
+    this
+  },
+  n.prototype.redirects = function (t) {
+    return this._maxRedirects = t,
+    this
+  },
+  n.prototype.maxResponseSize = function (t) {
+    if ('number' != typeof t) throw TypeError('Invalid argument');
+    return this._maxResponseSize = t,
+    this
+  },
+  n.prototype.toJSON = function () {
+    return {
+      method: this.method,
+      url: this.url,
+      data: this._data,
+      headers: this._header
+    }
+  },
+  n.prototype.send = function (t) {
+    var e = s(t),
+    r = this._header['content-type'];
+    if (this._formData && console.error('.send() can\'t be used if .attach() or .field() is used. Please use only .send() or only .field() & .attach()'), e && !this._data) Array.isArray(t) ? this._data = [
+    ] : this._isHost(t) || (this._data = {
+    });
+     else if (t && this._data && this._isHost(this._data)) throw Error('Can\'t merge these send calls');
+    if (e && s(this._data)) for (var n in t) this._data[n] = t[n];
+     else 'string' == typeof t ? (r || this.type('form'), r = this._header['content-type'], this._data = 'application/x-www-form-urlencoded' == r ? this._data ? this._data + '&' + t : t : (this._data || '') + t)  : this._data = t;
+    return !e || this._isHost(t) ? this : (r || this.type('json'), this)
+  },
+  n.prototype.sortQuery = function (t) {
+    return this._sort = void 0 === t || t,
+    this
+  },
+  n.prototype._finalizeQueryString = function () {
+    var t = this._query.join('&');
+    if (t && (this.url += (this.url.indexOf('?') >= 0 ? '&' : '?') + t), this._query.length = 0, this._sort) {
+      var e = this.url.indexOf('?');
+      if (e >= 0) {
+        var r = this.url.substring(e + 1).split('&');
+        'function' == typeof this._sort ? r.sort(this._sort)  : r.sort(),
+        this.url = this.url.substring(0, e) + '?' + r.join('&')
+      }
+    }
+  },
+  n.prototype._appendQueryString = function () {
+    console.trace('Unsupported')
+  },
+  n.prototype._timeoutError = function (t, e, r) {
+    if (!this._aborted) {
+      var n = new Error(t + e + 'ms exceeded');
+      n.timeout = e,
+      n.code = 'ECONNABORTED',
+      n.errno = r,
+      this.timedout = !0,
+      this.abort(),
+      this.callback(n)
+    }
+  },
+  n.prototype._setTimeouts = function () {
+    var t = this;
+    this._timeout && !this._timer && (this._timer = setTimeout(function () {
+      t._timeoutError('Timeout of ', t._timeout, 'ETIME')
+    }, this._timeout)),
+    this._responseTimeout && !this._responseTimeoutTimer && (this._responseTimeoutTimer = setTimeout(function () {
+      t._timeoutError('Response timeout of ', t._responseTimeout, 'ETIMEDOUT')
+    }, this._responseTimeout))
+  }
+},
+function (t, e, r) {
+  'use strict';
+  function n(t) {
+    if (t) return o(t)
+  }
+  function o(t) {
+    for (var e in n.prototype) t[e] = n.prototype[e];
+    return t
+  }
+  var i = r(16);
+  t.exports = n,
+  n.prototype.get = function (t) {
+    return this.header[t.toLowerCase()]
+  },
+  n.prototype._setHeaderProperties = function (t) {
+    var e = t['content-type'] || '';
+    this.type = i.type(e);
+    var r = i.params(e);
+    for (var n in r) this[n] = r[n];
+    this.links = {
+    };
+    try {
+      t.link && (this.links = i.parseLinks(t.link))
+    } catch (t) {
+    }
+  },
+  n.prototype._setStatusProperties = function (t) {
+    var e = t / 100 | 0;
+    this.status = this.statusCode = t,
+    this.statusType = e,
+    this.info = 1 == e,
+    this.ok = 2 == e,
+    this.redirect = 3 == e,
+    this.clientError = 4 == e,
+    this.serverError = 5 == e,
+    this.error = (4 == e || 5 == e) && this.toError(),
+    this.created = 201 == t,
+    this.accepted = 202 == t,
+    this.noContent = 204 == t,
+    this.badRequest = 400 == t,
+    this.unauthorized = 401 == t,
+    this.notAcceptable = 406 == t,
+    this.forbidden = 403 == t,
+    this.notFound = 404 == t,
+    this.unprocessableEntity = 422 == t
+  }
+},
+function (t, e, r) {
+  'use strict';
+  e.type = function (t) {
+    return t.split(/ *; */).shift()
+  },
+  e.params = function (t) {
+    return t.split(/ *; */).reduce(function (t, e) {
+      var r = e.split(/ *= */),
+      n = r.shift(),
+      o = r.shift();
+      return n && o && (t[n] = o),
+      t
+    }, {
+    })
+  },
+  e.parseLinks = function (t) {
+    return t.split(/ *, */).reduce(function (t, e) {
+      var r = e.split(/ *; */),
+      n = r[0].slice(1, - 1);
+      return t[r[1].split(/ *= */) [1].slice(1, - 1)] = n,
+      t
+    }, {
+    })
+  },
+  e.cleanHeader = function (t, e) {
+    return delete t['content-type'],
+    delete t['content-length'],
+    delete t['transfer-encoding'],
+    delete t.host,
+    e && (delete t.authorization, delete t.cookie),
+    t
+  }
+},
+function (t, e) {
+  function r() {
+    this._defaults = [
+    ]
+  }
+  [
+    'use',
+    'on',
+    'once',
+    'set',
+    'query',
+    'type',
+    'accept',
+    'auth',
+    'withCredentials',
+    'sortQuery',
+    'retry',
+    'ok',
+    'redirects',
+    'timeout',
+    'buffer',
+    'serialize',
+    'parse',
+    'ca',
+    'key',
+    'pfx',
+    'cert'
+  ].forEach(function (t) {
+    r.prototype[t] = function () {
+      return this._defaults.push({
+        fn: t,
+        arguments: arguments
+      }),
+      this
+    }
+  }),
+  r.prototype._setDefaults = function (t) {
+    this._defaults.forEach(function (e) {
+      t[e.fn].apply(t, e.arguments)
+    })
+  },
+  t.exports = r
+},
+function (t, e, r) {
+  'use strict';
+  function n(t, e) {
+    if (!(t instanceof e)) throw new TypeError('Cannot call a class as a function')
+  }
+  function o(t, e) {
+    if (!t) throw new ReferenceError('this hasn\'t been initialised - super() hasn\'t been called');
+    return !e || 'object' !== (void 0 === e ? 'undefined' : s(e)) && 'function' != typeof e ? t : e
+  }
+  function i(t, e) {
+    if ('function' != typeof e && null !== e) throw new TypeError('Super expression must either be null or a function, not ' + (void 0 === e ? 'undefined' : s(e)));
+    t.prototype = Object.create(e && e.prototype, {
+      constructor: {
+        value: t,
+        enumerable: !1,
+        writable: !0,
+        configurable: !0
+      }
+    }),
+    e && (Object.setPrototypeOf ? Object.setPrototypeOf(t, e)  : t.__proto__ = e)
+  }
+  var s = 'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator ? function (t) {
+    return typeof t
+  }
+   : function (t) {
+    return t && 'function' == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? 'symbol' : typeof t
+  };
+  Object.defineProperty(e, '__esModule', {
+    value: !0
+  });
+  var a = function () {
+    function t(t, e) {
+      for (var r = 0; r < e.length; r++) {
+        var n = e[r];
+        n.enumerable = n.enumerable || !1,
+        n.configurable = !0,
+        'value' in n && (n.writable = !0),
+        Object.defineProperty(t, n.key, n)
+      }
+    }
+    return function (e, r, n) {
+      return r && t(e.prototype, r),
+      n && t(e, n),
+      e
+    }
+  }(),
+  u = r(0),
+  l = function (t) {
+    return t && t.__esModule ? t : {
+    default:
+      t
+    }
+  }(u),
+  c = r(19),
+  p = function (t) {
+    function e() {
+      n(this, e);
+      var t = o(this, (e.__proto__ || Object.getPrototypeOf(e)).call(this));
+      return t.state = {
+        selected: [
+        ]
+      },
+      t
+    }
+    return i(e, t),
+    a(e, [
+      {
+        key: 'handleOptionChange',
+        value: function (t) {
+          var e = t.target;
+          if ('radio' === e.type) this.setState({
+            selected: [
+              e.value
+            ]
+          });
+           else {
+            var r = this.state.selected,
+            n = this.props.data.vote_limit,
+            o = r.slice();
+            o.indexOf(e.value) > - 1 ? o = o.filter(function (t) {
+              return t !== e.value
+            })  : o.push(e.value),
+            o.length <= n && this.setState({
+              selected: o
+            })
+          }
+        }
+      },
+      {
+        key: 'handleSubmit',
+        value: function (t) {
+          t.preventDefault(),
+          0 !== this.state.selected.length && this.props.voteOption(this.state.selected)
+        }
+      },
+      {
+        key: 'render',
+        value: function () {
+          var t = this,
+          e = this.state.selected,
+          r = this.props.data,
+          n = r.title,
+          o = r.vote_limit,
+          i = r.voted_user_count,
+          s = r.expire_time,
+          a = r.options,
+          u = 1 === o ? '单选' : '最多选' + o + '项',
+          p = a.some(function (t) {
+            return !0 === t.is_voted
+          }),
+          h = void 0,
+          f = void 0,
+          d = Date.now();
+          s ? (f = new Date(s.replace(/-/g, '/')).getTime(), h = f <= d)  : h = !1;
+          var y = p || 0 === e.length || h;
+          return l.default.createElement('div', {
+            className: 'poll-wrapper'
+          }, l.default.createElement('div', {
+            className: 'poll-title'
+          }, l.default.createElement('span', null, n, '（', u, '）')), l.default.createElement('div', {
+            className: 'poll-meta'
+          }, l.default.createElement('span', null, i, '人参与'),
+          !h && s ? l.default.createElement('span', {
+            className: 'poll-expire-time'
+          }, ' · 距离结束还有 ', (0, c.timeBetween) (f, d)) :
+          null),
+          l.default.createElement('div', {
+            className: 'poll-content'
+          }, l.default.createElement('form', {
+            className: 'poll-options',
+            onSubmit: this.handleSubmit.bind(this)
+          }, a.map(function (r) {
+            var n = i ? Math.round(100 * r.voted_user_count / i)  : 0;
+            return p || h ? l.default.createElement('div', {
+              key: r.id,
+              className: 'poll-chart'
+            }, l.default.createElement('span', {
+              className: 'poll-option'
+            }, r.is_voted ? l.default.createElement('span', {
+              className: 'poll-option-voted'
+            }) :
+            null,
+            l.default.createElement('span', {
+              className: 'poll-option-title'
+            }, r.title),
+            l.default.createElement('span', {
+              className: 'poll-option-voted-count'
+            }, r.voted_user_count, '（', n, '%）')),
+            l.default.createElement('span', {
+              className: 'poll-bar'
+            }, l.default.createElement('span', {
+              className: 'poll-bar-active',
+              style: {
+                width: n + '%'
+              }
+            }))) :
+            l.default.createElement('label', {
+              key: r.id,
+              className: 'poll-label'
+            }, l.default.createElement('span', {
+              className: (0, c.cls) ('poll-checkbox', e.indexOf(r.id) > - 1 && 'poll-checkbox-checked')
+            }, l.default.createElement('input', {
+              type: 1 === o ? 'radio' : 'checkbox',
+              name: 'input-' + r.id,
+              value: r.id,
+              checked: e.indexOf(r.id) > - 1,
+              onChange: t.handleOptionChange.bind(t)
+            })), l.default.createElement('span', {
+              className: 'poll-option'
+            }, r.title))
+          }), l.default.createElement('div', {
+            className: 'poll-vote'
+          }, l.default.createElement('button', {
+            className: (0, c.cls) ('poll-btn', y && 'poll-btn-disabled'),
+            disabled: y,
+            type: 'submit'
+          }, p ? '已投票' : h ? '已结束' : '投票'),
+          p || h ? null : l.default.createElement('div', {
+            className: 'poll-tip'
+          }, '投票后可查看结果')))))
+        }
+      }
+      ]), e
+    }(u.Component);
+    e.default = p
+  },
+  function (t, e, r) {
+    'use strict';
+    function n() {
+      for (var t = arguments.length, e = Array(t), r = 0; r < t; r++) e[r] = arguments[r];
+      return e.filter(function (t) {
+        return 'string' == typeof t
+      }).join(' ')
+    }
+    function o(t, e) {
+      var r = t - e;
+      r /= 1000;
+      var n = Math.floor(r % 60);
+      r /= 60;
+      var o = Math.floor(r % 60);
+      r /= 60;
+      var i = Math.floor(r % 24),
+      s = Math.floor(r / 24),
+      a = '';
+      return s > 0 ? a = s + '天' + i + '时' + o + '分' : i > 0 ? a = i + '时' + o + '分' : o > 0 ? a = o + '分' + n + '秒' : n > 0 && (a = n + '秒'),
+      a
+    }
+    Object.defineProperty(e, '__esModule', {
+      value: !0
+    }),
+    e.cls = n,
+    e.timeBetween = o
+  },
+  function (t, e) {
+  }
+  ]);
+  $(window).bind('load', function () {
+    if ('_IMAGE_GIF_RENDER' in window) {
+      window._IMAGE_GIF_RENDER({
+        preloadNum: 3
+      });
+    }
+    if ('_POLL_RENDER' in window) {
+      var group = {
+        is_member: 'False' === 'True',
+        title: '鹅们栖息地'
+      }
+      window._POLL_RENDER(group)
+    }
+  });
+  ;
+  Do = (typeof Do === 'undefined') ? $ : Do;
+  Do(function () {
+    var reportDiv = '#link-report'.concat('_group');
+    $('body').delegate(reportDiv, 'mouseenter mouseleave', function (e) {
+      switch (e.type) {
+        case 'mouseenter':
+          $(this).find('.report').css('visibility', 'visible');
+          break;
+        case 'mouseleave':
+          $(this).find('.report').css('visibility', 'hidden');
+          break;
+      }
+    });
+    $(reportDiv).delegate('.report a', 'click', function (e) {
+      e.preventDefault();
+      var auditUrl = 'http://www.douban.com/misc/audit_report?url=',
+      opt = '';
+      var obj = $(e.target).closest(reportDiv);
+      var id = obj.length != 0 ? obj.data('id')  : undefined;
+      var params = (opt && id) ? '?'.concat(opt, '=', id)  : '';
+      var url = 'https://www.douban.com/group/topic/150253457/'.concat(params);
+      generate_report_dialog({
+        report_url: url
+      });
+    });
+    $(reportDiv).append('<div class="report"><a rel="nofollow" href="javascript:void(0)">举报</a></div>');
+  });
+  ;
+  'use strict'; $(function () {
+    function t(t, e) {
+      var a = t.text(),
+      r = a ? parseInt(a)  : 0;
+      r += e,
+      r > 0 ? t.text(r)  : 0 === r && t.text('')
+    }
+    var e = 'https://m.douban.com/rexxar/api/v2/';
+    $('.react-btn').bind('click', function (a) {
+      if (window._USER_ABNORMAL) return void (show_abnormal && show_abnormal());
+      var r = $(this),
+      n = r.find('.react-text'),
+      i = r.find('.react-num'),
+      o = r.data(),
+      c = void 0;
+      c = 0 === o.reaction_type ? 1 : 0;
+      var s = {
+        reaction_type: c,
+        ck: get_cookie('ck')
+      },
+      d = '' + e + o.type + '/' + o.object_id + '/react';
+      $.ajax({
+        type: 'post',
+        url: d,
+        data: s,
+        traditional: !0,
+        beforeSend: function (t) {
+          t.withCredentials = !0
+        },
+        xhrFields: {
+          withCredentials: !0
+        },
+        success: function (e) {
+          r.data('reaction_type', e.reaction_type),
+          1 === e.reaction_type ? (t(i, 1), n.text('已赞'), r.removeClass('react-add').addClass('react-cancel'))  : (t(i, - 1), n.text('赞'), r.removeClass('react-cancel').addClass('react-add'))
+        },
+        error: function (t) {
+          try {
+            var e = JSON.parse(t.response);
+            e.extra && e.extra.solution_uri && (window.location.href = e.extra.solution_uri)
+          } catch (t) {
+          }
+        }
+      })
+    })
+  });
+  'use strict'; function show_doulist_remind() {
+    var e = '         <div id=\'doulist-new-function-remind\'>             <div class=\'title\'>“喜欢”升级啦</div>             <div class=\'desc\'>觉得内容不错，点个赞吧；</br>想Mark，收藏到豆列是最好的选择</div>             <button class=\'i_know\'>我知道了</button>         </div>     ',
+    o = document.createElement('DIV');
+    o.innerHTML = e,
+    o = o.firstElementChild;
+    var t = document.querySelector('.action-react');
+    if (t) {
+      t.style.position = 'relative',
+      t.appendChild(o);
+      var i = document.querySelector('.i_know');
+      i.addEventListener('click', close_doulist_remind)
+    }
+  }
+  function close_doulist_remind() {
+    var e = document.getElementById('doulist-new-function-remind');
+    e && e.remove()
+  }
+  !function () {
+    localStorage && localStorage.getItem('douban-fav-remind') || get_cookie && get_cookie('douban-fav-remind') || (show_doulist_remind(), localStorage && localStorage.setItem('douban-fav-remind', '1'), set_cookie && set_cookie({
+      'douban-fav-remind': 1
+    }, 36500, 'douban.com', '/'))
+  }();
+  ; (function () {
+    window.collect_target = {
+      tkind: '1013',
+      tid: '150253457'
+    }
+    window.update_collect_state = function (collected) {
+      var ele = document.querySelector('.lnk-doulist-add');
+      var old_num = parseInt(ele.querySelector('.react-num').textContent);
+      ele.className = 'lnk-doulist-add';
+      if (collected) {
+        ele.className += ' collect-cancel';
+        ele.querySelector('.react-text').textContent = '已收藏';
+        ele.querySelector('.react-num').textContent = isNaN(old_num) ? 1 : old_num + 1;
+      } else {
+        ele.className += ' collect-add';
+        ele.querySelector('.react-text').textContent = '收藏';
+        ele.querySelector('.react-num').textContent = isNaN(old_num) ? '' : old_num - 1 === 0 ? '' : old_num - 1;
+      }
+    }
+  }) ();
+  function deferred() {
+    var e = {
+      done: [
+      ],
+      fail: [
+      ]
+    },
+    t = {
+      done: function (o) {
+        return e.done.push(o),
+        t
+      },
+      fail: function (o) {
+        return e.fail.push(o),
+        t
+      }
+    };
+    return {
+      resolve: function () {
+        for (var t, o = 0; t = e.done[o++]; ) t.apply(this, arguments)
+      },
+      reject: function () {
+        for (var t, o = 0; t = e.fail[o++]; ) t.apply(this, arguments)
+      },
+      promise: t
+    }
+  }
+  var loader = function (e, t, o, r, n, a) {
+    if (e) {
+      'function' == typeof t && (r = t, t = ''),
+      'function' == typeof o && (r = o, o = '');
+      var i = function () {
+        loader.loaded[e] = 1,
+        r && r(e),
+        r = null,
+        clearTimeout(d)
+      };
+      if (loader.loaded[e]) return loader.loading[e] && (loader.loading[e] = 0),
+      void setTimeout(function () {
+        i()
+      }, 0);
+      if (loader.loading[e]) return void setTimeout(function () {
+        loader(e, t, o, r, n, a)
+      }, 10);
+      loader.loading[e] = 1;
+      var l,
+      d = setTimeout(function () {
+        try {
+          a(e)
+        } catch (e) {
+        }
+      }, n || 6000),
+      s = t || e.toLowerCase().split(/\./).pop().replace(/[\?#].*/, '');
+      'js' === s ? (l = document.createElement('script'), l.setAttribute('type', 'text/javascript'), l.setAttribute('src', e), l.setAttribute('async', !0))  : 'css' === s && (l = document.createElement('link'), l.setAttribute('type', 'text/css'), l.setAttribute('rel', 'stylesheet'), l.setAttribute('href', e)),
+      o && (l.charset = o),
+      'css' === s ? setTimeout(function () {
+        i()
+      }, 0)  : (l.onerror = function () {
+        i(),
+        l.onerror = null
+      }, l.onload = l.onreadystatechange = function () {
+        this.readyState && 'loaded' !== this.readyState && 'complete' !== this.readyState || (setTimeout(function () {
+          i()
+        }, 0), l.onload = l.onreadystatechange = null)
+      });
+      var c = function () {
+        var e = document.getElementsByTagName('script');
+        return e[e.length - 1]
+      }();
+      c.parentNode.insertBefore(l, c)
+    }
+  }; loader.loaded = window.__external_files_loaded = window.__external_files_loaded || {
+  }, loader.loading = window.__external_files_loading = window.__external_files_loading || {
+  }, loader.batch = function () {
+    if (0 != arguments.length) {
+      var e = Array.prototype.slice.call(arguments);
+      '[object Array]' == Object.prototype.toString.call(e[0]) && (e = e[0]);
+      for (var t, o = deferred(), r = [
+      ], n = function () {
+        r.pop(),
+        0 === r.length && o.resolve()
+      }, a = 0; t = e[a++]; ) r.push(t),
+      loader(t, n);
+      return o.promise
+    }
+  };
+  Do(function () {
+    loader.batch([
+    'https://img3.doubanio.com/f/shire/8377b9498330a2e6f056d863987cc7a37eb4d486/css/ui/dialog.css',
+    'https://img3.doubanio.com/f/shire/383a6e43f2108dc69e3ff2681bc4dc6c72a5ffb0/js/ui/dialog.js'
+    ]).done(function () {
+      function deferred() {
+        var e = {
+          done: [
+          ],
+          fail: [
+          ]
+        },
+        t = {
+          done: function (i) {
+            return e.done.push(i),
+            t
+          },
+          fail: function (i) {
+            return e.fail.push(i),
+            t
+          }
+        };
+        return {
+          resolve: function () {
+            for (var t, i = 0; t = e.done[i++]; ) t.apply(this, arguments)
+          },
+          reject: function () {
+            for (var t, i = 0; t = e.fail[i++]; ) t.apply(this, arguments)
+          },
+          promise: t
+        }
+      }
+      function asyncRequest(e, t, i) {
+        var n = deferred(),
+        l = null,
+        a = (i || 'get').toLowerCase();
+        return l = $.ajax({
+          url: e,
+          type: a,
+          dataType: 'json',
+          data: 'post' === a ? $.extend(t, {
+            ck: get_cookie('ck')
+          })  : t,
+          error: function (e) {
+            n.reject(e)
+          },
+          success: function (e) {
+            n.resolve(e)
+          }
+        }),
+        n.promise.abort = function () {
+          l && l.abort()
+        },
+        n.promise
+      }
+      function doulistCustomeEvents(e) {
+        var t = e.node.find('.bn-cancel');
+        e.node.bind('dialog-error', function (i, n) {
+          e.setContent('<div class="doulist-submit-success"><p>' + n + '</p>         <div class="item-submit">           <span class="bn-flat"><input type="button" value="关闭" class="bn-cancel"></span>         </div>       </div>      ').update(),
+          t.click(function () {
+            e.close()
+          }),
+          setTimeout(function () {
+            e.close()
+          }, 3000)
+        }),
+        e.node.bind('dialog-success', function (i, n) {
+          title = n.__title || '添加成功',
+          action = n.__action || '已经添加到<a href="' + n.url + '" target="_blank"> ' + n.name + '</a>',
+          e.setTitle(title).setContent('<div class="doulist-submit-success">         <i></i>' + action + '         <div>           <p>窗口将在<b class="num">3</b>秒后关闭</p>           <span class="bn-flat"><input type="button" value="关闭" class="bn-cancel"></span>         </div>       </div>      '),
+          t = e.node.find('.bn-cancel'),
+          t.click(function () {
+            e.close(),
+            a && clearTimeout(a)
+          });
+          var l,
+          a,
+          d = e.node.find('.num'),
+          o = d.text();
+          !function () {
+            l = l || arguments.callee,
+            a = setTimeout(function () {
+              d.text(--o),
+              o ? l()  : e.close()
+            }, 1000)
+          }()
+        })
+      }
+      var encodeHTML = function (e) {
+        return e.replace(/\&/g, '&amp;').replace(/\"/g, '&quot;').replace(/\'/g, '&apos;').replace(/\</g, '&lt;').replace(/\>/g, '&gt;')
+      },
+      DOULIST_ADDITEM = '/j/doulist/{doulist_id}/additem',
+      DOULIST_REMOVEITEM = '/j/doulist/{doulist_id}/removeitem',
+      DOULIST_EDITITEM = '/j/doulist/{doulist_id}/edititem',
+      DOULIST_COMMENT = '/j/doulist/{doulist_id}/poke',
+      DOULIST_CREATE = '/j/doulist/add',
+      DOULIST_LIST = '/j/doulist/cat',
+      DOULIST_SEARCH = '/j/doulist/search',
+      DOULIST_SEARCH_SELF = '/j/doulist/search_user_doulists',
+      DOULIST_GET_ITEM_INFO = '/j/doulist/get_item_info',
+      validateForm = function (e, t) {
+        var i,
+        n = !0;
+        for (var l in t) t.hasOwnProperty(l) && (i = e.find(l), n = t[l](i), n && validateForm.cleanError(i));
+        return n
+      };
+      validateForm.displayError = function (e, t) {
+        if (e) {
+          var i = e.closest('.item'),
+          n = i.find('.form-field-error');
+          0 === n.length && (n = $('<div class="form-field-error"></div>').prependTo(i)),
+          n.show().html(t)
+        }
+      },
+      validateForm.cleanError = function (e) {
+        e.closest('.item').find('.form-field-error').hide()
+      };
+      var doulistDialogForm = 'undefined' == typeof doulistDialogForm ? {
+      }
+       : doulistDialogForm;
+      !function () {
+        function e(e, t, i) {
+          var n = t.find('input[name=dl_id]:checked'),
+          l = n.val(),
+          a = n.next().find('b').text(),
+          d = {
+            '.dl_exist_select input:checked': function (e) {
+              return !!e.length || (validateForm.displayError($('.dl_exist_select'), '请选择一个豆列'), !1)
+            }
+          };
+          if (!l && window.hasCancelCollectAction === !0) {
+            var o = {
+              __title: '取消收藏成功',
+              __action: '已经取消了收藏'
+            };
+            return setTimeout(function () {
+              t.trigger('form-submit-success', o)
+            }, 500),
+            window.update_collect_state && window.update_collect_state(!1),
+            window.hasCancelCollectAction = null,
+            t
+          }
+          if (validateForm(t, d)) {
+            var s = {
+              sid: i.subjectId,
+              skind: i.subjectKind,
+              comment: i.comment,
+              sync_to_mb: i.sync
+            };
+            i.subjectIsUrlSubject && (s.surl = i.subjectId, delete s.sid, delete s.skind),
+            asyncRequest(DOULIST_ADDITEM.replace('{doulist_id}', l), s, 'post').done(function (e) {
+              return e.r ? void t.trigger('form-submit-error', e.err)  : (e.sid = i.subjectId, e.doulist_id = l, e.name = $.trim(encodeHTML(a)), window.update_collect_state && window.update_collect_state(!0), void t.trigger('form-submit-success', e))
+            })
+          }
+          return t
+        }
+        var t = function (t) {
+          var i = t.node.find('form');
+          i.submit(function (n) {
+            n.preventDefault();
+            var l = {
+              subjectId: i.find('input[name=subject_id]').val(),
+              subjectKind: i.find('input[name=subject_kind]').val(),
+              subjectUrl: i.find('input[name=subject_url]').val(),
+              subjectIsUrlSubject: 'true' == i.find('input[name=subject_is_url_subject]').val(),
+              comment: i.find('textarea[name="comment"]').val(),
+              sync: i.find('#dlg-opt-share').attr('checked') ? '1' : ''
+            };
+            e(t, i, l).bind('form-submit-error', function (e, i) {
+              t.node.trigger('dialog-error', i)
+            }).bind('form-submit-success', function (e, i) {
+              t.node.trigger('dialog-success', i)
+            })
+          }),
+          i.bind('form-submit-fail', function (e, t) {
+            validateForm.displayError(i.find('input[name=dl_title]'), t)
+          }),
+          doulistCustomeEvents(t)
+        };
+        doulistDialogForm.initForm = t
+      }(),
+      function (e) {
+        function t(e, t) {
+          i(t),
+          e.trigger('dialog:show', r),
+          n(t, e),
+          doulistDialogForm.initForm(r)
+        }
+        function i(e) {
+          r && r.close(),
+          e.picture = e.picture || '/pics/doulist_article.png';
+          var t = r = dui.Dialog({
+            title: '收藏到豆列',
+            width: 640,
+            cls: 'dialog-doulist',
+            content: ('False' === e.canview ? '<div class="doulist-ft" style="text-align:left;">啊，该内容你没有权限查看或已被作者删除。</div>' : '<form action="" method="post">        <div class="doulist-bd">          <div class="doulist-preview">            <div><img src="{{picture}}" /></div>            <p class="item-title">{{title}}</p>          </div>          <div class="doulist-content">            <div class="item">              <div class="item-hd">                <input type="text" name="search" class="dl_search" autocomplete="off" placeholder="请输入豆列名称" maxlength="40" />                <a href="javascript: void 0;" class="clear_search">×</a>                <h3>选择豆列</h3>                <input type="button" name="dl_choose" id="dl_new" autocomplete="off" class="lnk-flat" value="创建豆列" />              </div>              <div class="dl-bd">                <div class="dl-item">                  <div class="dl_new_title" style="display: none;">                    <div class="dl_title_block">                       <input id="dl_title" type="text" class="basic-input dl-title" placeholder="输入新豆列名称" maxlength="40" />                    </div>                     <div class="dl_action_block">                       <div class="dl_create_option">                        <span>隐私设置：</span>                         <input id="doulist_is_not_secret" type="radio" name="is_private" value="false" checked />                         <label for="doulist_is_not_secret">所有人可见</label>                         <input id="doulist_is_secret" type="radio" name="is_private" value="true" />                         <label for="doulist_is_secret">仅自己可见</label>                       </div>                       <input type="button" class="lnk-flat dl_new_submit" disabled value="创建" />                    </div>                   </div>                </div>                <div class="dl-loading">                  加载中...                </div>              </div>            </div>            <div class="item">              <div class="item-hd">                <h3>推荐语<span>（选填）</span></h3>              </div>              <textarea id="doulist_item_comment" class="basic-textarea" name="comment" placeholder="告诉大家你添加它的理由吧"></textarea>            </div>            <input type="hidden" name="dl_cat" value="{{cate}}">            <input type="hidden" name="subject_id" value="{{id}}">            <input type="hidden" name="subject_kind" value="{{cate}}">            <input type="hidden" name="subject_url" value="{{url}}">            <input type="hidden" name="subject_is_url_subject" value="{{isurlsubject}}">            </div>          </div>          <div class="doulist-ft">            <a target="_blank" href="https://www.douban.com/service/bookmarklet" class="lnk-bookmarklet">小工具：从浏览器直接把网页内容加入豆列</a>            <span class="bn-flat cancel_btn"><input type="button" class="j_close_dialog" value="取消"></span>            <span class="bn-flat"><input type="submit" class="doulist_submit" value="保存"></span>          </div>      </form>      ').replace(/{{[^{}]+}}/g, function (t) {
+              return encodeHTML(e[t.replace(/[{}]/g, '')] + '').toString()
+            })
+          }, !0).open();
+          t.update(),
+          t.node.bind('dialog:close', function () {
+            t.node.remove()
+          }),
+          t.node.bind('dialog:change', function () {
+            t.update()
+          })
+        }
+        function n(t, i) {
+          var n = r,
+          o = window.collect_target || {
+          };
+          asyncRequest(DOULIST_LIST, o).done(function (i) {
+            var o = u,
+            c = '<div class="dl_exist_select">';
+            e(i.doulist).each(function (e, t) {
+              c += o.replace(/{{[^{}]+}}/g, function (e) {
+                var i = t[e.replace(/[{}]/g, '')];
+                return i && encodeHTML(i.toString()) || ''
+              })
+            }),
+            c += '</div>',
+            e('<div />', {
+              class : 'dl-item dl-item-exist'
+            }).insertAfter(e('.dl-item')).html(c),
+            e('.dl-item-exist :radio').eq(0).attr('checked', !0),
+            e('.dl_new_title').hide(),
+            n.node.find('form #doulist_item_comment').val(i.comment),
+            a(t),
+            d(),
+            s(),
+            l()
+          }).fail(function () {
+            e('.dl-loading').text('+_+ 加载失败，请刷新重试')
+          })
+        }
+        function l() {
+          e('.cancel-collect-btn').bind('click', function (t) {
+            t.stopPropagation(),
+            t.preventDefault();
+            var i = e(this).attr('data-name');
+            if (confirm('确定要取消收藏到豆列 ' + i + ' 吗？')) {
+              var n = e(this).attr('data-id'),
+              l = DOULIST_REMOVEITEM.replace('{doulist_id}', n),
+              a = window.collect_target || {
+              },
+              d = e(this);
+              a.ck = get_cookie('ck'),
+              asyncRequest(l, a, 'post').done(function (e) {
+                if (0 === e.r) {
+                  d.attr('data-is-collected', 'false');
+                  var t = d.closest('label').parent();
+                  t.find('input[type="radio"]').get(0).checked = !1,
+                  t.removeClass('checked_dl'),
+                  window.hasCancelCollectAction = !0
+                } else alert('取消收藏时遇到了一些错误: ' + e.r)
+              })
+            }
+          })
+        }
+        function a(t) {
+          var i = r,
+          n = e('#dl_new'),
+          l = e('.dl_new_title'),
+          a = e('#dl_title'),
+          d = e('.dl_exist_select');
+          e('#dl_id');
+          n.click(function () {
+            var t = e('.form-field-error');
+            l.is(':hidden') ? (t.show() && n.val('取消创建'), l.slideDown(function () {
+              d.addClass('fold'),
+              a.focus()
+            }))  : t.hide() && l.hide() && n.val('创建豆列') && d.removeClass('fold')
+          }),
+          i.node.delegate(':radio', 'change', function () {
+            var n = e(this).val(),
+            l = DOULIST_COMMENT.replace('{doulist_id}', n);
+            e(this).parent().siblings('.checked_dl').removeClass('checked_dl'),
+            e(this).parent().addClass('checked_dl'),
+            asyncRequest(l, {
+              sid: t.id,
+              skind: t.cate
+            }).done(function (e) {
+              i.node.find('form #doulist_item_comment').val(e.comment)
+            }).fail(function () {
+            })
+          }),
+          d.bind('DOMMouseScroll mousewheel wheel', function (t) {
+            var i = null;
+            'mousewheel' == t.type ? i = t.originalEvent.wheelDelta * - 1 : 'wheel' == t.type ? i = t.originalEvent.deltaY : 'DOMMouseScroll' == t.type && (i = 40 * t.originalEvent.detail),
+            i && (t.preventDefault(), e(this).scrollTop(i + e(this).scrollTop()))
+          })
+        }
+        function d() {
+          var t = r,
+          i = e('.dl_new_title'),
+          n = e('#dl_title'),
+          l = e('.dl_new_submit');
+          n.bind('keyup change', function () {
+            e.trim(n.val()).length ? l.removeAttr('disabled')  : l.attr('disabled', !0)
+          }),
+          n.bind('keydown', function (e) {
+            if (13 === e.keyCode) return c(t, i),
+            !1
+          }),
+          l.click(function () {
+            c(t, i)
+          })
+        }
+        function o(t) {
+          var i = u,
+          n = '';
+          e(t.doulists).each(function (t, l) {
+            0 === e('#' + l.id).length && (n += i.replace(/{{[^{}]+}}/g, function (e) {
+              var t = l[e.replace(/[{}]/g, '')];
+              return t && encodeHTML(t.toString()) || ''
+            }))
+          }),
+          e('.dl-item-exist .dl_exist_select').append(n)
+        }
+        function s() {
+          function t() {
+            e('.no-match-warning').length ? e('.no-match-warning').show()  : n.before('<p class="no-match-warning">没有找到匹配豆列，可以换个关键词试试</p>')
+          }
+          var i = e('.dl_search'),
+          n = e('.dl_exist_select'),
+          l = e('.dl_new_title'),
+          a = e('#dl_new'),
+          d = e('.clear_search'),
+          s = null,
+          c = '';
+          d.click(function () {
+            return i.val('').change(),
+            !1
+          }),
+          i.focus(function () {
+            if (e(this).addClass('expand'), !l.is(':hidden')) {
+              var t = e('.form-field-error');
+              t.hide() && l.hide() && a.val('创建豆列') && n.removeClass('fold')
+            }
+          }),
+          i.bind('keyup change', function () {
+            var l = e.trim(i.val());
+            l.length && c !== l ? (e('.no-match-warning').hide(), s && s.abort(), d.hide(), i.addClass('loading'), c = l, s = asyncRequest(DOULIST_SEARCH_SELF, {
+              q: l
+            }), s.done(function (l) {
+              if (i.removeClass('loading'), d.show(), l && l.doulists) {
+                o(l),
+                n.children().hide();
+                for (var a = 0; a < l.doulists.length; a++) e('#' + l.doulists[a].id).parent().show();
+                l.doulists.length || t()
+              }
+            }).fail(function () {
+              t(),
+              i.removeClass('loading'),
+              d.show()
+            }))  : 0 === l.length && (e('.no-match-warning').hide(), n.children().show(), d.hide())
+          }),
+          i.bind('keydown', function (t) {
+            if (13 === t.keyCode) return e('.dl-item-exist label:visible').eq(0).prev().attr('checked', !0),
+            !1
+          })
+        }
+        function c(t, i) {
+          var n = '<div><input type="radio" value="{{id}}" id="{{id}}" name="dl_id" checked="checked"><label for="{{id}}"><b data-is-private="{{is_private}}">{{name}}</b></label></div>',
+          l = e('#dl_title'),
+          a = e('#dl_new'),
+          d = e('.dl_exist_select'),
+          o = {
+            '#dl_title': function (e) {
+              return '' !== e.val() || (validateForm.displayError(e, '请给你的列表起一个名称'), !1)
+            }
+          };
+          if (validateForm(i, o)) {
+            var s = e('.dl_new_submit');
+            s.attr('disabled', !0),
+            asyncRequest(DOULIST_CREATE, {
+              title: e('#dl_title').val(),
+              is_private: e('input[name="is_private"]:checked').val()
+            }, 'post').done(function (t) {
+              if (t.r) return void alert(t.err);
+              t.doulist_id = t.id;
+              var i = n.replace(/{{[^{}]+}}/g, function (e) {
+                var i = t[e.replace(/[{}]/g, '')];
+                return i && encodeHTML(i.toString()) || ''
+              }),
+              o = e(i);
+              o.prependTo(d),
+              o.siblings().removeClass('checked_dl'),
+              o.addClass('checked_dl'),
+              d.animate({
+                scrollTop: 0
+              }, 100),
+              a.click(),
+              l.val('').change()
+            }).fail(function () {
+              alert('网络问题，请稍后重试'),
+              s.removeAttr('disabled')
+            })
+          } else t.update();
+          return i
+        }
+        var r;
+        window.hasCancelCollectAction = null;
+        var u = '  <div>    <input type="radio" value="{{id}}" id="{{id}}" name="dl_id">     <label for="{{id}}">       <span>{{count}}</span>       <b data-is-private="{{is_private}}">         <i data-id="{{id}}" data-name="{{name}}" data-is-collected="{{is_collected}}" class="cancel-collect-btn"></i>         {{name}}       </b>     </label>   </div>';
+        e.fn.doulistDialog = function (i) {
+          return new t(e(this), i)
+        }
+      }(jQuery);
+      $(document).delegate('.lnk-doulist-add', 'click', function (e) {
+        e.preventDefault();
+        if (window._USER_ABNORMAL) {
+          show_abnormal && show_abnormal()
+          return
+        }
+        var self = $(this);
+        var param = $.extend({
+          'url': ''
+        }, $(this).data(), {
+          link: this.href
+        });
+        // 兼容jquery 1.8.x
+        var newParam = {
+        };
+        for (var key in param) {
+          if (typeof param[key] === 'number') {
+            param[key] = self.attr('data-' + key);
+          }
+          if (param.hasOwnProperty(key)) {
+            newParam[$.camelCase(key)] = param[key];
+          }
+        }
+        self.doulistDialog(newParam);
+      });
+    });
+  });
+  ;
+  var rec_url = 'https://www.douban.com/share/recommend?';
+  ;
+  function exp_dialog(e) {
+    var t = document.documentElement;
+    return 0 - parseInt(e.offsetHeight / 2) + (TBWindowMargin = t && t.scrollTop || document.body.scrollTop) + 'px'
+  }
+  function exp_overlay(e) {
+    return 0 - parseInt(e.offsetHeight / 2) + (TBWindowMargin = document.documentElement && document.documentElement.scrollTop || document.body.scrollTop) + 'px'
+  }
+  !function (e, t, n) {
+    if ('undefined' == typeof DoubanShare) {
+      var i = {
+      },
+      o = [
+      ],
+      a = '//img3.doubanio.com/pics/loading.gif',
+      r = '.lnk-douban-sharing',
+      d = '<div style="padding:30px 0;text-align:center;font-size:14px;color:#060;">分享成功!</div>',
+      l = '<div class="rectitle"><span class="gact rr"><a href="#" class="lnk-close">x</a></span><span class="m" >{TITLE}</span></div><div class="bd" style="position:relative;line-height:0;font-size:0;"></div>',
+      c = function (e, t, n) {
+        var i;
+        return /device-mobile/i.test(document.documentElement.className) && (n = 0.9 * document.documentElement.clientWidth),
+        'undefined' != typeof dui && dui.Dialog ? (i = dui.Dialog({
+          width: n || 500,
+          content: e,
+          title: t,
+          isHideClose: 0
+        }, !0).open(), i.node.addClass('dui-dialog-rec').find('.bd').css({
+          position: 'relative',
+          padding: '10px 0 0 0',
+          'line-height': 0,
+          'font-size': 0
+        }))  : (i = $('#dialog'), 0 === i.length && ($('<div id="overlay"></div><div id="dialog" class="dialog-shuo"  style="width:' + (n || 500) + 'px;"></div>').appendTo('body'), i = $('#dialog')), i.html(e), u(), i.find('.lnk-close').click(function (e) {
+          e.preventDefault(),
+          s()
+        })),
+        i
+      },
+      u = function () {
+        if ('undefined' != typeof dui && dui.Dialog && i.currentDialog) return void i.currentDialog.update();
+        var e = $.browser.msie ? - 2 : 16,
+        n = $('#dialog') [0],
+        o = n.offsetWidth,
+        a = (t.body.offsetWidth - o) / 2;
+        $('#overlay').css({
+          height: n.offsetHeight + e,
+          width: o + 16,
+          left: a + 5 + 'px'
+        }),
+        n.style.left = a + 'px'
+      },
+      s = function () {
+        return 'undefined' != typeof dui && dui.Dialog && i.currentDialog ? (i.currentDialog.close(), void p.fire())  : ($('#overlay, #dialog').remove(), void p.fire())
+      },
+      f = function () {
+        return o.push(1),
+        'db-sharing-iframe' + o.length
+      },
+      g = function () {
+        var e = t.createElement('iframe');
+        return e.setAttribute('scrolling', 'no'),
+        e.setAttribute('frameBorder', '0'),
+        e.setAttribute('width', '100%'),
+        e.setAttribute('allowTransparency', 'true'),
+        e.src = '',
+        e
+      },
+      h = function (e) {
+        var t = g(),
+        o = f() + + new Date + (0 | 1000000 * Math.random()),
+        r = (e.css || '', e.text || '', e.heading || '推荐到豆瓣'),
+        d = e.image ? 280 : 230,
+        s = c(l.replace('{TITLE}', r), r, e.width);
+        i.currentDialog = s,
+        $(t).load(function () {
+          try {
+            t.setAttribute('height', t.contentWindow.document.body.clientHeight),
+            u()
+          } catch (e) {
+          }
+        }),
+        t.setAttribute('id', o),
+        t.setAttribute('height', e.height || d),
+        t.src = n + $.param(e) + '&alt=xd&callback=DoubanShare.callback&_stamp=' + o,
+        s.node ? s.node.find('.bd').css('background', 'url(' + a + ') 48% 48% no-repeat').eq(0).html('').append(t)  : s.find('.bd').css('background', 'url(' + a + ') 48% 48% no-repeat').html('').append(t),
+        u()
+      },
+      p = function (e) {
+        p.callback.push(e)
+      },
+      m = function (e) {
+        h(e)
+      },
+      b = function () {
+        $('html').delegate(r, 'click', function (e) {
+          var t = $(e.currentTarget),
+          n = t.data(),
+          i = [
+            'user_id',
+            'object_kind',
+            'object_id'
+          ];
+          if (e.preventDefault(), window._USER_ABNORMAL) return void (show_abnormal && show_abnormal());
+          for (var o in n) 'number' == typeof n[o] && (n[o] = t.attr('data-' + o));
+          var a = {
+            from: 'snsrec2share'
+          };
+          for (var r in i) {
+            var d = i[r];
+            a[d] = n[d] || 0
+          }
+          moreurl && moreurl(e.currentTarget, a),
+          h(n)
+        })
+      };
+      p.callback = [
+      ],
+      p.fire = function () {
+        for (; p.callback.length; ) p.callback.pop() ()
+      },
+      b(),
+      i.cacheUrl = {
+      },
+      i.updateDialog = function (e) {
+        var t = i.currentDialog;
+        return t.node ? (t.node.find('iframe').css('height', e + 'px'), void t.update())  : (e && $('#dialog iframe').css('height', e + 'px'), void u())
+      },
+      i.closeDialog = function () {
+        var e = i.currentDialog;
+        e.node ? (e.node.find('.hd').hide(), e.node.find('.bd').css('background', 'none').html(d))  : (e.find('.rectitle').hide(), e.find('.bd').css('background', 'none').html(d)),
+        u(),
+        setTimeout(function () {
+          s()
+        }, 1000)
+      },
+      i.share = m,
+      i.onDialogClose = p,
+      e.DoubanShare = i,
+      (new Image).src = a
+    }
+  }(window, document, rec_url);
+  ;
+  Douban.init_on_blacklist = function (node) {
+    $(node).click(function (e) {
+      e.preventDefault()
+      alert('你已被对方加入黑名单，不能转发该日记')
+    })
+  };
+  ;
+  !function (e, t, i) {
+    function r(e, n) {
+      this.config = i.extend(!0, {
+      }, a, e);
+      var o = r.serializeOpenGraph();
+      this.pageInfo = i.extend({
+        title: o.title || t.title,
+        url: o.url || t.location.href,
+        pic: ('array' === i.type(o.image) ? o.image[0] : o.image) || '',
+        desc: o.description || '',
+        site: o.site_name || ''
+      }, n)
+    }
+    var a = {
+      weibo: {
+        appkey: ''
+      },
+      douban: {
+      },
+      qq: {
+      },
+      qzone: {
+      }
+    };
+    r.serializeOpenGraph = function () {
+      var e = {
+      };
+      i('meta[property^="og:"]').each(function (t, r) {
+        r = i(r);
+        var a = r.attr('property').replace(/^og\:/, '');
+        e[a] = r.attr('content')
+      });
+      var t = i('meta[property="og:image"]');
+      return t.length > 1 && (e.image = t.map(function (e, t) {
+        return i(t).attr('content')
+      }).toArray()),
+      e
+    },
+    r.prototype = {
+      constructor: r,
+      set: function (e, t) {
+        var r = {
+        };
+        r[e] = t,
+        i.extend(this.config, r)
+      },
+      get: function (e) {
+        var t = i.extend({
+        }, this.pageInfo, this.config[e]);
+        return {
+        }
+        [
+          e
+        ]
+      },
+      openInNewWindow: function (t, r) {
+        r = r || {
+        };
+        var a = r.width || 500,
+        n = r.height || 360,
+        o = i.extend({
+        }, {
+          width: a,
+          height: n,
+          toolbar: 0,
+          location: 0,
+          resizable: 1,
+          scrollbars: 'yes',
+          left: r.left || (screen.width - a) / 2,
+          top: r.top || (screen.height - n) / 2
+        }, r);
+        e.open(t, 'SocialSharing', i.param(o).replace(/&/g, ','))
+      }
+    },
+    window.SocialSharing = r
+  }(window, document, jQuery);
+
+          weibo: {
+            url:  + i.param({
+              appkey: t.appkey,
+              url: t.url,
+              title: t.title,
+              pic: t.pic
+            })
+          },
+          qq: {
+            url:  + i.param({
+              url: t.url,
+              desc: t.title,
+              pics: t.pic,
+              site: t.site
+            })
+          },
+          qzone: {
+            url:  + i.param({
+              url: t.url,
+              title: t.title,
+              summary: t.desc,
+              pics: t.pic
+            })
+          }
+
+
+
+  ;
+  $(function () {
+    function a(a, i) {
+      a.find('.sharing-wechat-qrcode').html('<img src="//img3.doubanio.com/dae/qrgen/v2/' + encodeURIComponent(i) + '.png" alt="扫描二维码" />')
+    }
+    var i = $(document),
+    e = {
+      weibo: 'bshare_sina',
+      qq: 'bshare_qqim',
+      qzone: 'bshare_qzone'
+    },
+    n = {
+      qq: {
+        width: 800,
+        height: 600
+      },
+      qzone: {
+        width: 800,
+        height: 600
+      }
+    };
+    i.delegate('.sharing-indicator', 'click', function () {
+      var i = $(this).closest('.sharing'),
+      e = i.find('.sharing-layer');
+      if (e.hasClass('is-hidden')) {
+        var n = i.data('target').url;
+        e.removeClass('is-hidden'),
+        a(e, n)
+      } else e.addClass('is-hidden')
+    }),
+    $('body').bind('click', function (a) {
+      if (!$(a.target).hasClass('sharing-indicator')) {
+        var i = $('.sharing-layer');
+        i.hasClass('is-hidden') || $(a.target).closest('.sharing-layer').length || i.addClass('is-hidden')
+      }
+    }),
+    $('.sharing-layer').bind('click', function (a) {
+      return $(a.target).closest('.sharing-list').length ? void $('.sharing-layer').addClass('is-hidden')  : void a.stopPropagation()
+    }),
+    i.delegate('[data-share]', 'click', function () {
+      var a = $(this),
+      i = a.data('share'),
+      s = $(this).closest('.sharing'),
+      t = s.data('target') || {
+      },
+      r = new SocialSharing({
+        weibo: {
+          appkey: '3015934887'
+        }
+      }, t),
+      d = 'https://www.douban.com/link2?type=redir&vendor=' + e[i] + '&url=' + encodeURIComponent(r.get(i).url);
+      r.openInNewWindow(d, n[i])
+    })
+  });
+  ;
+  var dialogJoinGroup = $('.dialog_join_group');
+  window._JOIN_POPUP_DIALOG = function () {
+    dialogJoinGroup.css('display', 'block');
+  }
+  $('.join_group_cancel, .join_group_close').bind('click', function (e) {
+    dialogJoinGroup.css('display', 'none');
+  })
+  ;
+  Do = (typeof Do === 'undefined') ? $ : Do;
+  var div = '.operation-more';
+  function addReportLink() {
+    $.each($('#comments:not(\'.sns-comments\') .comment-item '.concat(div)), function (i, el) {
+      if ($(el).find('.comment-report').length == 0) {
+        $(el).append('<div class="comment-report"><a rel="nofollow" href="javascript:void(0)">举报</a></div>');
+      }
+    });
+  };
+  Do(function () {
+    $('#comments').delegate('.comment-item', 'mouseenter mouseleave', function (e) {
+      switch (e.type) {
+        case 'mouseenter':
+          $(this).find('.comment-report').css('visibility', 'visible');
+          break;
+        case 'mouseleave':
+          $(this).find('.comment-report').css('visibility', 'hidden');
+          break;
+      }
+    });
+    $('#comments').delegate('.comment-report a', 'click', function (e) {
+      e.preventDefault();
+      var auditUrl = 'http://www.douban.com/misc/audit_report?url=',
+      opt = 'comment_id';
+      var obj = $(e.target).closest('.comment-item');
+      var cid = obj.data('cid');
+      var url = 'https://www.douban.com/group/topic/150253457/?'.concat(opt, '=', cid);
+      var type = [
+        'comment'
+      ]
+      if (/^\/subject/.test(location.pathname)) {
+        type.push('subject')
+      }
+      generate_report_dialog({
+        report_url: url,
+        type: type
+      });
+    });
+    addReportLink();
+  });
+  ;
+  $('.img-uploader-wrapper').bind('click', function (e) {
+    $(this).find('.img-upload-input').click();
+  })
+  $('.img-upload-input').bind('click', function (e) {
+    e.stopPropagation();
+  });
+  $('.img-upload-input').bind('change', function () {
+    if (!this.files.length) return;
+    if (!window.FileReader) return;
+    var reader = new FileReader();
+    var that = this;
+    $(this).parent().addClass('added');
+    reader.onload = function () {
+      $(that).parent().prepend('<img class="img-preview" src="' + reader.result + '">')
+    }
+    reader.readAsDataURL(this.files[0]);
+  })
+  $('.remove-img').bind('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    $(this).parent().find('.img-preview').remove();
+    $(this).parent().find('.img-upload-input').val('');
+    $(this).parent().removeClass('added');
+  })
+

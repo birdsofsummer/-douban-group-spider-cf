@@ -1,0 +1,21 @@
+{
+	"public_id": "d74b0c1cdbff1ea0abf4c6aeee791f32",
+	"version": 1566441763,
+	"signature": "45729f8d1863321bc9655463088facb914f95310",
+	"width": 108,
+	"height": 108,
+	"format": "png",
+	"resource_type": "image",
+	"created_at": "2019-08-22T02:42:43Z",
+	"tags": [],
+	"pages": 1,
+	"bytes": 25427,
+	"type": "upload",
+	"etag": "2d768ae6fc410e664f444f789a03a3b2",
+	"placeholder": false,
+	"url": "http://com-3pix-res.cloudinary.com/image/upload/v1566441763/d74b0c1cdbff1ea0abf4c6aeee791f32.png",
+	"secure_url": "https://com-3pix-res.cloudinary.com/image/upload/v1566441763/d74b0c1cdbff1ea0abf4c6aeee791f32.png",
+	"coordinates": {
+		"faces": []
+	}
+}

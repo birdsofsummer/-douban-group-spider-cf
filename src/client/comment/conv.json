@@ -1,0 +1,168 @@
+{
+	"conversation": {
+		"id": "sp_6phY2k0C_466997",
+		"etag": 280
+	},
+	"comment": {
+		"id": "sp_6phY2k0C_466997_c_ye3RFF",
+		"type": "comment",
+		"user_id": "u_t5VMxaQ5xIgo",
+		"content": [
+			{
+				"id": "e24eabc7f09a844a2ec563f94ff65da0",
+				"text": "Paedophilia by LGBT people is the root cause of \"gender dysphoria\".  Why is it unacceptable to acknowledge this truth?",
+				"type": "text"
+			}
+		],
+		"timestamp": 1566405726.212517,
+		"replies_count": 6,
+		"rank": {
+			"positive": 81,
+			"negative": 1
+		}
+	},
+	"replies": [
+		{
+			"id": "sp_6phY2k0C_466997_c_ye3RFF_r_W30NuA",
+			"user_id": "u_uqxqxCY9f2Kk",
+			"content": [
+				{
+					"id": "163523e31e9c7a633a5595fa93fe779d",
+					"type": "text",
+					"text": "It’s really Anti-Christ."
+				}
+			],
+			"timestamp": 1566426823.257822,
+			"metadata": {
+				"reply_to": {
+					"reply_id": "sp_6phY2k0C_466997_c_ye3RFF_r_8B2Wet",
+					"user_id": "u_juU974PvThd7"
+				}
+			},
+			"reply_parent_id": "sp_6phY2k0C_466997_c_ye3RFF_r_8B2Wet",
+			"rank": {
+				"positive": 0,
+				"negative": 0
+			},
+			"depth": 2
+		},
+		{
+			"id": "sp_6phY2k0C_466997_c_ye3RFF_r_1CY77z",
+			"user_id": "u_Ss63sW60Tmpm",
+			"content": [
+				{
+					"id": "f26db4e09b4668d0ee4cfbb712c4bd3d",
+					"type": "text",
+					"text": "Anti-semantics. Ouch. Thank you for this one."
+				}
+			],
+			"timestamp": 1566417750.7338097,
+			"metadata": {
+				"reply_to": {
+					"reply_id": "sp_6phY2k0C_466997_c_ye3RFF_r_6R5yny",
+					"user_id": "u_cwFf1yumtKir"
+				}
+			},
+			"reply_parent_id": "sp_6phY2k0C_466997_c_ye3RFF_r_6R5yny",
+			"rank": {
+				"positive": 0,
+				"negative": 1
+			},
+			"depth": 1
+		},
+		{
+			"id": "sp_6phY2k0C_466997_c_ye3RFF_r_gh2Qs5",
+			"user_id": "u_0IlbQEFXltlf",
+			"content": [
+				{
+					"id": "79dfa0cc4f0be394f2440fe9b2e816a5",
+					"type": "text",
+					"text": "Unless it is the cement mixer Jeffery Epstein ordered to his island - that one is anti-cementic."
+				}
+			],
+			"timestamp": 1566426700.0897446,
+			"edited": true,
+			"metadata": {
+				"reply_to": {
+					"reply_id": "sp_6phY2k0C_466997_c_ye3RFF_r_6R5yny",
+					"user_id": "u_cwFf1yumtKir"
+				},
+				"display_name": "spearofdestiny"
+			},
+			"reply_parent_id": "sp_6phY2k0C_466997_c_ye3RFF_r_6R5yny",
+			"rank": {
+				"positive": 2,
+				"negative": 0
+			},
+			"depth": 1
+		}
+	],
+	"users": [
+		{
+			"id": "u_juU974PvThd7",
+			"user_name": "Norry902",
+			"display_name": "Norris Hude",
+			"image_id": "p/u/rj8kafxa1dauihtxmagi",
+			"online": false,
+			"points": 258000
+		},
+		{
+			"id": "u_cwFf1yumtKir",
+			"user_name": "ArboneroK",
+			"display_name": "ArboneroK",
+			"image_id": "990d1f1faecbfaeab9b98488a22bd3c8",
+			"online": false,
+			"points": 243760
+		},
+		{
+			"id": "u_t5VMxaQ5xIgo",
+			"user_name": "Odinsson536",
+			"display_name": "Odinsson",
+			"image_id": "#Green-Hat",
+			"online": false,
+			"points": 43450
+		},
+		{
+			"id": "u_uqxqxCY9f2Kk",
+			"user_name": "Portonchok",
+			"display_name": "Portonchok",
+			"image_id": "c4eb3aee54a9cb8c4345be5a6e5f93e5",
+			"online": false,
+			"points": 12770
+		},
+		{
+			"id": "u_Ss63sW60Tmpm",
+			"user_name": "thenick",
+			"display_name": "thenick",
+			"image_id": "0a9d0ef259f3086c8b14eeb256de22a1",
+			"online": false,
+			"points": 60290
+		},
+		{
+			"id": "u_0IlbQEFXltlf",
+			"user_name": "spearofdestiny",
+			"display_name": "spearofdestiny",
+			"image_id": "9842d06036a6508369629837cf04e7f9",
+			"online": false,
+			"points": 328300
+		}
+	],
+	"me": {
+		"id": "u_0SV8p29yFOVo",
+		"user_name": "RedCandy",
+		"image_id": "#Red-Candy",
+		"display_name": "",
+		"email": null,
+		"verified": false,
+		"registered": false,
+		"social": [],
+		"sso_user": false,
+		"fake_image": true,
+		"is_moderator": false,
+		"is_follower": false,
+		"allow_vote": "_",
+		"points": null,
+		"rank": {},
+		"reported_messages": {}
+	}
+}

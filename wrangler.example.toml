@@ -1,0 +1,6 @@
+name = "douban"
+type = "webpack"
+zone_id = "1111"
+private = false
+account_id = "222"
+route  = "xx.xx.xx.xx"

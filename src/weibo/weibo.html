@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <base target="_blank" />
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="referrer" content="never">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <link rel="shortcut icon" href="https://img1.doubanio.com/view/group/sqxs/public/105835b9c5e3089.jpg" type="image/x-icon" />
+    <link href="https://spin.js.org/spin.css" type="text/css" rel="stylesheet">
+
+    <title>🎈欢迎来玩，以鹅传鹅！蟹蟹。爱你们～ </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@2.0.0/dist/vuetify.min.css">
+
+
+<style>
+[v-cloak]{
+    display: none;
+}
+a,a *{
+	color: gray;
+	text-decoration: none;
+}
+.v-list-item__title,.time{
+    font-size:0.8rem;
+}
+.v-application--wrap{
+    max-width: 100vw;
+    width: 100vw;
+}
+.author-container{
+    display:inline-flex;
+    flex-direction: row;
+    font-size:0.7rem;
+}
+
+.card-container{
+	display: grid;
+	grid-auto-flow: column;
+	grid-template-columns: repeat(3,33%);
+    max-width: 100%;
+    width:100vw;
+}
+.card-container .v-card{ 
+    max-width: 100%;
+    flex: 1 1 auto;
+    width:100%;
+}  
+.v-toolbar__title{
+   font-size:1rem;
+   margin: 0 1rem;
+}
+.hit{
+    border-radius: 1rem;
+    margin: 0 0.5rem;
+} 
+section.row1{
+    width:100vw;
+    max-width: 100%;
+}
+
+@media (max-width: 1000px) {
+    .card-container{
+        grid-auto-flow: row;
+        grid-template-columns: auto;
+    }
+    .card-container .v-card{
+       max-width:100%;
+       flex: 1 1 auto;
+       width: 100vw;
+    }
+
+}
+
+</style>
+</head>
+<body>
+    
+</body>
+
+<div id="app">
+    <v-app id="inspire" class="card-container">
+
+        <section class="row1">
+            <p></p>
+            <p><a href="//weread.qing.workers.dev">🎈🎈</a>欢迎来玩，以鹅传鹅！蟹蟹。爱你们～ 🎈🎈</p>
+            <p></p>
+        </section>
+
+        <section class="row1 card-container">
+        <v-card  class="mx-auto" v-for="(items,i) in washed" :key="i">
+            <v-toolbar color="green" dark>
+                <!--
+                <v-app-bar-nav-icon></v-app-bar-nav-icon>
+                -->
+
+
+                <a :href="to_csv(items)" :download="names[i]+'_'+today()+'.csv'">
+                    <v-avatar>
+                      <img :src="logo[i]" alt="avatar">
+                    </v-avatar>                
+                </a>
+
+                <a :href="to_csv(items1[i])" :download="names[i]+'_all_'+today()+'.csv'">
+                    <v-toolbar-title class="white--text">{{ names[i] }}</v-toolbar-title>
+               </a>
+
+                <v-spacer></v-spacer>
+                <!--
+                <v-btn icon>
+                    <v-icon>search</v-icon>
+                </v-btn>
+                <v-btn icon>
+                    <v-icon>check_circle</v-icon>
+                </v-btn>
+                -->
+            </v-toolbar>
+
+            <v-list two-line>
+                <v-list-item-group v-model="selected" multiple active-class="green--text">
+                    <template v-for="(item, index) in items">
+                        <v-list-item :key="item.title">
+                            <template v-slot:default="{ active, toggle }">
+
+                                <v-list-item-content>
+                                    <a :href="item.url">
+                                        <v-list-item-title v-text="item.title" :title="item.title"></v-list-item-title>
+                                        <!--v-list-item-subtitle class="text-primary" v-text="item.author"> </v-list-item-subtitle-->
+                                    </a>
+                                    <v-list-item-subtitle class="time"  v-text="item.time"></v-list-item-subtitle>
+                                </v-list-item-content>
+
+                                <v-list-item-action style="" class="author-container">
+                                    <a :href="item.author_u">
+                                        <v-list-item-action-text v-text="item.author"></v-list-item-action-text>
+                                    </a>
+
+                                    <v-list-item-action-text class="hit lime white--text" v-text="item.hit"></v-list-item-action-text>
+                                    <!--
+                                    <v-icon v-if="!active" color="grey lighten-1">
+                                        thumb_up
+                                    </v-icon>
+
+                                    <v-icon v-if="!active" color="grey lighten-1">
+                                        thumb_down
+                                    </v-icon>
+
+                                    <v-icon v-if="!active" color="grey lighten-1">
+                                        star_border
+                                    </v-icon>
+
+                                    <v-icon v-else color="yellow">
+                                        star
+                                    </v-icon>
+                                    -->
+                                </v-list-item-action>
+                            </template>
+                        </v-list-item>
+
+                        <v-divider v-if="index + 1 < items.length" :key="index"></v-divider>
+                    </template>
+                </v-list-item-group>
+            </v-list>
+        </v-card>
+
+
+        </section>
+        <!--
+        <section class="row">
+          <v-card>
+            <v-container fluid grid-list-xl >
+              <v-layout align-center wrap >
+                <v-flex xs12 sm12> 
+                    <v-select v-model="wash1" :items="wash1" attach chips label="洗" multiple ></v-select> 
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card>        
+        </section>
+        -->
+    </v-app>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/babel-polyfill/dist/polyfill.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.0.0/dist/vuetify.min.js"></script>
+<script src="https://cdn.bootcss.com/ramda/0.26.1/ramda.min.js"></script>
+<script src="https://cdn.bootcss.com/lodash.js/4.17.15/lodash.min.js"></script>
+<script src="https://cdn.bootcss.com/localforage/1.7.3/localforage.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.24.0/moment.min.js"></script>
+
+
+<script>
+    const get_json=u=>fetch(u).then(x=>x.json())
+    default_item=()=>( { 
+          time: '07-24 12:13',
+          url: 'https://www.douban.com/group/topic/146541191/',
+          title: '补了过期糖的我现在在爆哭！！我是最后一个知道小...',
+          author_u: 'https://www.douban.com/people/45858462/',
+          author: '沉默的小王',
+          hit: '111'
+    })
+
+const mycache=(k="douban",v=null)=>v ? localforage.setItem(k,v) : k ? localforage.getItem(k) :localforage.keys() 
+const
+wash=["101","Yamy","bdjw","cxk","gay","lgbt","tf","wyb","丁子峻","三小只","东东","丽颖","九州","于妈","于正","亲热","亲爱","蜜汁","佟年","倪妮","傅菁","全职","关晓彤","关智娬","出轨","刘宪华","刘恺威","刘雯","同性","吴亦凡","吴宣仪","商言","四字","三字","二字","大s","女团","奶茶","嬛","孟美岐","宁泽涛","宋祖儿","宸汐","小s","小三","小丽","帝国","张庭","张紫宁","张雪迎","张震","强东","徐梦洁","徐璐","心如","情深深","日本","易烊千玺","晚晚","晚红","晨宇","朱一龙","李小璐","李易峰","李晟","李溪芮","李现","李紫婷","杨幂","杨紫","杨芸晴","杨超越","林志玲","段奥娟","毛晓彤","江疏影","沈月","泫雅","潘玮柏","火箭少女","热巴","热搜","热爱","爱豆","王俊凯","王源","绿茶","耽美","肖","腐","艺兴","蔡徐坤","贾乃亮","赖美云","车","邓伦","都灵","金星","阿雅","陈情","雪梨","雪莉","霉","韩","韩庚","颖儿","鹿晗","黄柏钧","🌟","香蜜","现现","嘉尔","云熙","极速前进","舒淇","一博","sm","紫紫","子义","白宇","金麦","今麦","熹","许凯"] 
+const today=()=>moment().format("YYYYMMDD") 
+const to_blob=(d)=>{
+    //let blob=new Blob([JSON.stringify(d, null, 2)], {type : 'application/json'});
+    let blob=new Blob([d], {type : 'application/json'});
+    return URL.createObjectURL(blob);
+}
+const to_csv=(d=[])=>{
+    let k=""
+    let d1=""
+    if (d.length>0) {
+        k=Object.keys(d[0]).join(",")+"\n"
+        d1=d.map(y=>Object.values(y).join(",")).join("\n")
+    }
+    return to_blob(k+d1)
+}
+const render=(items)=>(
+        new Vue({
+            el: '#app',
+            vuetify: new Vuetify(),
+            methods:{
+                to_csv,
+                today,
+            },
+            computed:{
+                washed(x){
+                    let re=new RegExp(this.wash.join("|"),"i")
+                    return this.items1.map(y=>y
+                        .filter(x=>!re.test(x.title))
+                        .sort((b,a)=>a.hit-b.hit)
+                    )
+                }
+            },
+            data: () => ({
+                selected: [],
+                items1:items,
+                wash,
+                wash1:[...wash],
+                names:["鹅们栖息地","鹅组","自由吃瓜基地"],
+                logo:["https://img1.doubanio.com/view/group/sqxs/public/105835b9c5e3089.jpg","https://img3.doubanio.com/view/group/sqxs/public/580e4e9f613dd6d.jpg","https://img3.doubanio.com/view/group/sqxs/public/1c0a5162bddf475.jpg"],
+            }),
+        })
+)
+
+    const render_cache=async()=>{
+        let data=(await mycache("douban"))||[]
+        return render(data)
+    }
+   const render_net=async(u)=>{
+            let {ok,data}=await get_json(u)
+            if (!ok) return
+            mycache("douban",data)
+            let items=ok ? data :[]
+            render(items)
+    }
+    const render_net1=async(u)=>{
+            let {ok,data}=await get_json(u)
+            if (!ok) return
+            let items=ok ? data :[]
+            render(items)
+    }
+    const init=async ()=>{
+        let u=["/list","/list2"]
+        Promise.race([render_cache(),render_net1(u[0]),render_net(u[1])])
+    }
+    init()
+   </script>
+
+
+
+<script type="text/javascript" src="http://tjs.sjs.sinajs.cn/t3/platform/js/api/wb.js" charset="utf-8" ></script>
+
+
+<script type="text/javascript">
+WB.core.load(['connect', 'client'], function() {
+    var cfg = {
+        key: 'APP_KEY',
+        xdpath: '跨域文件url(http://yourdomain.com/xd.html)'
+    };
+    WB.connect.init(cfg);
+    WB.client.init(cfg);
+});
+
+login=()=>{
+ //   WB.connect.login(console.log);
+ //   WB.connect.logout(console.log);
+      WB.connect.checkLogin();
+}
+
+//https://open.weibo.com/wiki/Weibo-JS
+</script>
+
+</html>

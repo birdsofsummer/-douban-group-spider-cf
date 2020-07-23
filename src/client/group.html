@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <base target="_blank" />
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="referrer" content="never">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <link rel="shortcut icon" href="https://img1.doubanio.com/view/group/sqxs/public/105835b9c5e3089.jpg" type="image/x-icon" />
+    <link href="https://spin.js.org/spin.css" type="text/css" rel="stylesheet">
+
+    <title>🎈欢迎来玩，以鹅传鹅！蟹蟹。爱你们～ </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@2.0.0/dist/vuetify.min.css">
+
+
+<style>
+.loading{
+    pointer-events: none;    
+    position: fixed;
+    top: 50%;
+    left:50%;
+    z-index: 999;
+}
+.update-time{
+	font-size: 0.7rem;
+    color: #81b56e;
+}
+[v-cloak]{
+    display: none;
+}
+a,a *{
+	color: gray;
+	text-decoration: none;
+}
+.v-list-item__title,.time{
+    font-size:0.8rem;
+}
+.v-application--wrap{
+    max-width: 100vw;
+    width: 100vw;
+}
+.author-container{
+    display:inline-flex;
+    flex-direction: row;
+    font-size:0.7rem;
+}
+
+
+
+.card-container .v-card{ 
+    max-width: 100%;
+    flex: 1 1 auto;
+    width:100%;
+}  
+.v-toolbar__title{
+   font-size:1rem;
+   margin: 0 1rem;
+}
+.hit{
+    border-radius: 1rem;
+    margin: 0 0.5rem;
+} 
+section.row1{
+    width:100vw;
+    max-width: 100%;
+}
+
+
+
+
+.card-container,[class^='mygrid']{
+	display: grid;
+	grid-auto-flow: column;
+    max-width: 100%;
+    width:100vw;
+}
+
+.mygrid-1{ grid-template-columns: repeat(1,100%);}
+.mygrid-2{ grid-template-columns: repeat(2,50%);}
+.mygrid-3{ grid-template-columns: repeat(3,33%);}
+.mygrid-4{ grid-template-columns: repeat(4,25%);}
+.mygrid-5{ grid-template-columns: repeat(5,20%);}
+.mygrid-6{ grid-template-columns: repeat(6,16%);}
+.mygrid-7{ grid-template-columns: repeat(7,14%);}
+.mygrid-8{ grid-template-columns: repeat(8,12%);}
+.mygrid-9{ grid-template-columns: repeat(9,11%);}
+.mygrid-10{ grid-template-columns: repeat(10,10%);}
+.mygrid-11{ grid-template-columns: repeat(11,9%);}
+.mygrid-12{ grid-template-columns: repeat(12,8%);}
+.mygrid-13{ grid-template-columns: repeat(13,7%);}
+.mygrid-14{ grid-template-columns: repeat(14,7%);}
+.mygrid-15{ grid-template-columns: repeat(15,6%);}
+.mygrid-16{ grid-template-columns: repeat(16,6%);}
+.mygrid-17{ grid-template-columns: repeat(17,5%);}
+.mygrid-18{ grid-template-columns: repeat(18,5%);}
+.mygrid-19{ grid-template-columns: repeat(19,5%);}
+.mygrid-20{ grid-template-columns: repeat(20,5%);}
+.mygrid-21{ grid-template-columns: repeat(21,4%);}
+.mygrid-22{ grid-template-columns: repeat(22,4%);}
+.mygrid-23{ grid-template-columns: repeat(23,4%);}
+.mygrid-24{ grid-template-columns: repeat(24,4%);}
+.mygrid-25{ grid-template-columns: repeat(25,4%);}
+.mygrid-26{ grid-template-columns: repeat(26,3%);}
+.mygrid-27{ grid-template-columns: repeat(27,3%);}
+.mygrid-28{ grid-template-columns: repeat(28,3%);}
+.mygrid-29{ grid-template-columns: repeat(29,3%);}
+.mygrid-30{ grid-template-columns: repeat(30,3%);}
+
+
+@media (max-width: 1000px) {
+    .card-container,[class^='mygrid']{
+        grid-auto-flow: row;
+        grid-template-columns: auto;
+    }
+    .card-container .v-card,[class^='mygrid']{
+       max-width:100%;
+       flex: 1 1 auto;
+       width: 100vw;
+    }
+
+}
+.douban-title{
+	cursor: pointer;
+}
+
+.editor-container{
+	display: grid;
+	grid-template-columns: 90%;
+	justify-content: center;
+	margin: 2rem 0;
+	/* background: #ff03; */
+	min-height: 50vh;
+}
+.overflow-visible{
+    white-space: initial;
+}
+a{
+    color:gray !important;
+}
+.v-timeline-item__body,body{
+    font-size: 0.8rem;
+}
+
+
+
+</style>
+</head>
+<body>
+    <div id="loading" class="loading"> </div>
+    <div id="app">
+
+    <v-app id="inspire" class="card-container">
+
+        <section class="row1 douban-title">
+            <p class="update-time">last update @ {{from_now}} </p>
+            <p class="update-time">{{now}}</p>
+            <p><a href="//weread.qing.workers.dev">🎈🎈</a>欢迎来玩，以鹅传鹅！蟹蟹。爱你们～ 🎈🎈</p>
+            <p></p>
+        </section>
+
+        <section class="row1 card-container mygrid-1">
+            <v-card  class="mx-auto" v-for="(items,i) in [doc]" :key="'topic'+i">
+                <v-toolbar class="douban-title" color="green" dark @click="refresh_n">
+                    <!--
+                    <v-app-bar-nav-icon></v-app-bar-nav-icon>
+                    -->
+                    <v-toolbar-title class="white--text">ccc</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <!--
+                    <v-btn icon>
+                        <v-icon>search</v-icon>
+                    </v-btn>
+                    <v-btn icon>
+                        <v-icon>check_circle</v-icon>
+                    </v-btn>
+                    -->
+                </v-toolbar>
+                <v-container>
+                      <v-timeline dense clipped>
+
+                        <v-timeline-item class="mb-4" color="cyan" icon-color="grey lighten-2" small v-for="(n,j) in items" :key="'gg'+j" >
+
+                          <template v-slot:icon>
+                            <v-avatar>
+                              <img src="https://hbimg.huabanimg.com/05411bd6d9687a28b6b70f0c1c8e1f8283b4dc0446bb3-zN20d9_fw658">
+                            </v-avatar>
+                          </template>
+
+                          <v-layout justify-space-between >
+                                    <div class="py-4">
+                                    <p>{{n.created_time}}</p>
+
+                                  <v-expansion-panels focusable>
+                                    <v-expansion-panel >
+                                      <v-expansion-panel-header>
+                                        <h6 :class="`headline font-weight-light mb-4 `" v-text="n.title"></h6>
+                                         <a :href="'/topic.html?id='+n._id.$oid">...</a> 
+                                      </v-expansion-panel-header>
+                                      <v-expansion-panel-content>
+                                          <v-flex>
+                                                 <v-avatar color="grey lighten-4" > 
+                                                    <img src="https://hbimg.huabanimg.com/05411bd6d9687a28b6b70f0c1c8e1f8283b4dc0446bb3-zN20d9_fw658" alt="avatar" >
+                                                </v-avatar>
+                                                 <span >VJ</span>
+                                          </v-flex>
+
+                                        <v-divider></v-divider>
+
+                                        <div v-html="n.content">{{n.content}}</div>
+                                      </v-expansion-panel-content>
+                                    </v-expansion-panel>
+
+                                  </v-expansion-panels>
+
+
+
+                                        <v-divider inset></v-divider>
+                                        <v-flex class="text-center">
+
+                                            <!--v-icon color="grey lighten-1" > star_border </v-icon>
+                                            <v-icon color="yellow" > star </v-icon>
+                                            <v-icon color="yellow" > star </v-icon>
+                                            <v-icon color="yellow" > star </v-icon>
+                                            <v-icon color="yellow" > star </v-icon-->
+
+                                            <v-btn class="ma-2" text icon color="blue lighten-2" title="like">
+                                              <v-icon>thumb_up</v-icon>
+                                              0
+                                            </v-btn>
+
+                                            <v-btn class="ma-2" text icon color="red lighten-2" title="dislike">
+                                              <v-icon>thumb_down</v-icon>
+                                              0
+                                            </v-btn>
+
+
+                                            <v-btn class="ma-2" text icon color="blue lighten-2" title="conversation">
+                                                <v-icon color="green">chat</v-icon>
+                                                评论(2)
+                                            </v-btn>
+
+                                            <v-btn class="ma-2" text icon color="blue lighten-2" title="report">
+                                                <v-icon>email</v-icon>
+                                                举报(0)
+                                            </v-btn>
+
+
+                                            <v-btn class="ma-2" text icon color="red lighten-2" >
+                                              <v-icon>star</v-icon>
+                                              收藏 10
+                                            </v-btn>
+                                           <v-menu offset-y>
+                                              <template v-slot:activator="{ on }">
+                                                <v-btn class="ma-2" text icon color="red lighten-2" v-on="on">
+                                                  <v-icon>share</v-icon>
+                                                </v-btn>
+                                              </template>
+                                              <v-list>
+                                                <v-list-item v-for="(item, index) in share" :key="'share'+index" @click="" >
+                                                    <a :href="item.f(n)">
+                                                      <v-list-item-title>
+                                                          {{ item.title }}
+                                                      </v-list-item-title>
+                                                    </a>
+                                                </v-list-item>
+                                              </v-list>
+                                            </v-menu>  
+
+                                            <v-rating v-model="n.rating"  color="yellow"> </v-rating>
+                                        </v-flex>
+
+                                          <v-expansion-panels >
+                                            <v-expansion-panel >
+                                              <v-expansion-panel-header>
+                                                  <h6>conversation</h6>
+                                              </v-expansion-panel-header>
+                                              <v-expansion-panel-content>
+                                                      <v-timeline dense>
+
+                                                        <v-timeline-item
+                                                          v-for="n in 4"
+                                                          :key="n"
+                                                          large
+                                                        >
+                                                          <template v-slot:icon>
+                                                            <v-avatar>
+                                                              <img src="http://i.pravatar.cc/64">
+                                                            </v-avatar>
+                                                          </template>
+                                                          <!--template v-slot:opposite>
+                                                            <span>Tus eu perfecto</span>
+                                                          </template-->
+                                                          <v-card class="elevation-2">
+                                                            <v-card-title class="headline">Lorem ipsum</v-card-title>
+                                                            <v-flex>
+                                                                 <v-btn class="ma-2" text icon color="blue lighten-2" title="like">
+                                                                  <v-icon>thumb_up</v-icon>
+                                                                  0
+                                                                </v-btn>
+
+                                                                <v-btn class="ma-2" text icon color="red lighten-2" title="dislike">
+                                                                  <v-icon>thumb_down</v-icon>
+                                                                  0
+                                                                </v-btn>
+
+
+                                                                <v-btn class="ma-2" text icon color="blue lighten-2" title="conversation">
+                                                                    <v-icon color="green">chat</v-icon>
+                                                                    评论(2)
+                                                                </v-btn>
+
+                                                                <v-btn class="ma-2" text icon color="blue lighten-2" title="report">
+                                                                    <v-icon>email</v-icon>
+                                                                    举报(0)
+                                                                </v-btn>
+                                                            <v-flex>
+                                                            <v-card-text>Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.</v-card-text>
+                                                          </v-card>
+                                                        </v-timeline-item>
+                                                      </v-timeline>
+
+                                              </v-expansion-panel-content>
+                                            </v-expansion-panel>
+                                          </v-expansion-panels>
+                                    </div>
+
+                          </v-layout>
+                        </v-timeline-item>
+                      </v-timeline>
+                </v-container>
+              </v-card>
+        </section>
+
+
+
+        <section class="row1" >
+
+              <v-form>
+                <v-container grid-list-xl>
+                  <v-layout wrap>
+                    <v-flex xs12 sm12 md12>
+                      <v-text-field label="" v-model="topic.title" placeholder="title" title="title"></v-text-field> 
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-form>
+
+            <figure class="editor-container">
+                <div id="editor">
+                    <p></p>
+                </div>            
+            </figure>            
+
+              <div class="text-center">
+                <v-btn class="ma-2" tile color="lime" dark @click="post_topic">post</v-btn>
+                <v-btn class="ma-2" tile outlined color="success" @click="save_topic">
+                  <v-icon left>mdi-pencil</v-icon>save
+                </v-btn>
+                <!--v-btn class="ma-2" tile large color="teal" icon>
+                  <v-icon>edit</v-icon>
+                </v-btn-->
+              </div>
+
+        </section>
+
+
+        <!--
+        <section class="row">
+          <v-card>
+            <v-container fluid grid-list-xl >
+              <v-layout align-center wrap >
+                <v-flex xs12 sm12> 
+                    <v-select v-model="wash1" :items="wash1" attach chips label="洗" multiple ></v-select> 
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card>        
+        </section>
+        -->
+
+            <button type="button" id="page_down" aria-label="Scroll down" title="Scroll to top" class="v-btn v-btn--bottom v-btn--contained v-btn--fab v-btn--fixed v-btn--right v-btn--round theme--dark v-size--large red" style="">
+                    <span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate material-icons theme--dark">keyboard_arrow_down</i></span>
+            </button>
+    </v-app>
+</div>
+
+</body>
+
+
+
+
+<script src="https://cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/babel-polyfill/dist/polyfill.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.0.0/dist/vuetify.min.js"></script>
+<script src="https://cdn.bootcss.com/ramda/0.26.1/ramda.min.js"></script>
+<script src="https://cdn.bootcss.com/lodash.js/4.17.15/lodash.min.js"></script>
+<script src="https://cdn.bootcss.com/rxjs/6.5.2/rxjs.umd.min.js"></script>
+<script src="https://cdn.bootcss.com/localforage/1.7.3/localforage.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.24.0/locale/zh-cn.js"></script>
+<!--script src="https://unpkg.com/zangodb@latest/dist/zangodb.min.js"></script-->
+<!--script src="https://ckeditor.com/assets/libs/ckeditor5/12.3.1/ckeditor.js"></script-->
+<!--script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script-->
+<script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/balloon-block/ckeditor.js"></script>
+
+
+
+<script>
+        const { 
+//		combineLatest,
+//		concat,
+//		merge,
+//		onErrorResumeNext,
+//		race,
+//		zip
+		ArgumentOutOfRangeError,
+		AsyncSubject,
+		BehaviorSubject,
+		ConnectableObservable,
+		EMPTY,
+		EmptyError,
+		GroupedObservable,
+		NEVER,
+	//	Notification,
+		ObjectUnsubscribedError,
+		Observable,
+		ReplaySubject,
+		Scheduler,
+		Subject,
+		Subscriber,
+		Subscription,
+		TimeoutError,
+		UnsubscriptionError,
+		VirtualAction,
+		VirtualTimeScheduler,
+		ajax,
+		animationFrameScheduler,
+		asapScheduler,
+		asyncScheduler,
+		bindCallback,
+		bindNodeCallback,
+//		config,
+		defer,
+		empty,
+		forkJoin,
+		from,
+		fromEvent,
+		fromEventPattern,
+		generate,
+		identity,
+		iif,
+		interval,
+		isObservable,
+		never,
+		noop,
+		observable,
+		of,
+		operators,
+		pairs,
+		pipe,
+		queueScheduler,
+		range,
+		testing,
+		throwError,
+		timer,
+		using,
+		webSocket
+     } = rxjs
+
+        const {
+                audit,
+                auditTime,
+                buffer,
+                bufferCount,
+                bufferTime,
+                bufferToggle,
+                bufferWhen,
+                catchError,
+                combineAll,
+                combineLatest,
+                concat,
+                concatAll,
+                concatMap,
+                concatMapTo,
+                count,
+                debounce,
+                debounceTime,
+                defaultIfEmpty,
+                delay,
+                delayWhen,
+                dematerialize,
+                distinct,
+                distinctUntilChanged,
+                distinctUntilKeyChanged,
+                elementAt,
+                endWith,
+                every,
+                exhaust,
+                exhaustMap,
+                expand,
+                filter,
+                finalize,
+                find,
+                findIndex,
+                first,
+                flatMap,
+                groupBy,
+                ignoreElements,
+                isEmpty,
+                last,
+                map,
+                mapTo,
+                materialize,
+                max,
+                merge,
+                mergeAll,
+                mergeMap,
+                mergeMapTo,
+                mergeScan,
+                min,
+                multicast,
+                observeOn,
+                onErrorResumeNext,
+                pairwise,
+                partition,
+                pluck,
+                publish,
+                publishBehavior,
+                publishLast,
+                publishReplay,
+                race,
+                reduce,
+                refCount,
+                repeat,
+                repeatWhen,
+                retry,
+                retryWhen,
+                sample,
+                sampleTime,
+                scan,
+                sequenceEqual,
+                share,
+                shareReplay,
+                single,
+                skip,
+                skipLast,
+                skipUntil,
+                skipWhile,
+                startWith,
+                subscribeOn,
+                switchAll,
+                switchMap,
+                switchMapTo,
+                take,
+                takeLast,
+                takeUntil,
+                takeWhile,
+                tap,
+                throttle,
+                throttleTime,
+                throwIfEmpty,
+                timeInterval,
+                timeout,
+                timeoutWith,
+                timestamp,
+                toArray,
+            //    window,
+                windowCount,
+                windowTime,
+                windowToggle,
+                windowWhen,
+                withLatestFrom,
+                zip,
+                zipAll
+        }=operators
+
+   const {keys,values}=Object
+   const say=x=>y=>console.log(x,y)
+   const init_loading=()=>{
+        let target= document.querySelector('#loading')
+        var spinner = new Spinner().spin();
+        target.appendChild(spinner.el);
+        return (stop="")=> stop ? spinner.stop() : spinner.spin(target)
+    }
+
+   const loading=init_loading()
+   const mycache=(k="douban",v=null)=>v ? localforage.setItem(k,v) : k ? localforage.getItem(k) :localforage.keys() 
+
+   const ajax1=(method="POST")=>async(u="/",d=null)=>{
+       loading()
+       r={ok:false,data:{}}
+       try{
+           let body=d ? JSON.stringify(d) : null
+           r1=await fetch(u,{method,body})
+           r2=await r1.json()
+           r.data=r2
+       }catch(e){
+           r.data=e
+       }finally{
+           loading("stop")
+           return r
+       }
+   }
+   const http_post=ajax1('POST')
+   const http_put=ajax1('PUT')
+   const http_delete=ajax1('DELETE')
+
+   const get_json=async u=>{
+       loading()
+       let j={ok:false,data:[]}
+       const get_from_cache=async()=>{
+           let d=await mycache(u)
+           if (d && d.ok){
+               j=d
+           }
+       }
+       try{
+           let r=await fetch(u)
+           if (r.ok){
+              j=await r.json()
+              mycache(u,j)
+           }else{
+              await get_from_cache()
+           }
+       }catch(e){
+           console.log(e)
+            await get_from_cache()
+
+       }finally{
+            loading("stop")
+            return j
+       }
+   }
+
+const today=()=>moment().format("YYYYMMDD") 
+const to_blob=(d)=>{
+    //let blob=new Blob([JSON.stringify(d, null, 2)], {type : 'application/json'});
+    let blob=new Blob([d], {type : 'application/json'});
+    return URL.createObjectURL(blob);
+}
+
+const to_csv=(d=[])=>{
+    let k=""
+    let d1=""
+    if (d.length>0) {
+        k=keys(d[0]).join(",")+"\n"
+        d1=d.map(y=>values(y).join(",")).join("\n")
+    }
+    return to_blob(k+d1)
+}
+const now=()=>moment().format()
+const now1=()=>moment().unix()
+const this_year=()=> moment().format('Y') 
+const from_now=(t)=> moment(this_year()+t).fromNow()  // 08-12-01 0:0
+const from_now1=(t=1565053901)=> moment.unix(t).fromNow() //unix
+const from_now2=(t="2019-08-08 23:07:13.159193")=> moment(t).add(13,'hours').fromNow()
+const run=(...a)=>Promise.all(a)
+
+const get_douban=()=>get_json("/list3") 
+const get_douban1=()=>Promise.race(['/list2','/list3'].map(get_json))
+const get_news=()=>get_json("/news")
+const get_v=()=>get_json("/vv")
+const get_doc=()=>get_json("/doc")
+
+const get_hack_news=()=>get_json("/hack_news")
+
+const render_douban_cache=async(app)=>{
+        let data=(await mycache("douban"))||[]
+        let t=now();
+        app.update_time=t
+        app.from_now=moment(t).fromNow()
+        app.items1=data
+        return app
+}
+
+const render_douban=async(app)=>{
+       try{
+            let {ok,data}=await get_douban1()
+            if (!ok) return
+            mycache("douban",data)
+            app.items1=data
+            let t=now()
+            app.update_time=t
+            app.from_now=moment(t).fromNow()
+       }catch(e){
+           console.log(e)
+       }finally{
+       }
+}
+
+const render_hack_news=async (app)=>{
+        let {ok,data}=await get_hack_news()
+        if (!ok) return
+        data.forEach(x=>x.time=from_now2(x.submitted_time))
+        app.hack_news=data
+}
+const render_news=async (app)=>{
+        let {ok,data}=await get_news()
+        if (!ok) return
+        app.news=data
+}
+const format_vv_time=(app)=>{
+         kk=[ 'created', 'last_modified', 'last_touched' ]
+         app.vv.forEach(
+             x=>x.forEach(
+                 y=>kk.forEach(
+                     z=> (y["_"+z]=from_now1(y[z]))
+                 )
+             )
+         )
+ }
+
+const render_vv=async (app)=>{
+      let {ok,data}=await get_v()
+      if (!ok) return
+      app.vv=data
+      format_vv_time(app)
+      return app
+}
+
+const render_doc=async (app)=>{
+      let {ok,data}=await get_doc()
+      if (!ok) return
+      app.doc=data
+  //    format_vv_time(app)
+      return app
+}
+
+
+const init_app=(app)=> run(render_doc(app),)
+const refresh=(app)=>async(n=0)=>{
+           let t1=now1()
+           console.log(n,"refresh...",now(),t1)
+           await init_app(app)
+           let t2=now1()
+           console.log(n,"refresh done!",now(),t2,t2-t1)
+           loading("stop")
+}
+
+Vue.filter('from_now1', from_now1);
+const render=(items=[],time=now())=>(
+        new Vue({
+            el: '#app',
+            vuetify: new Vuetify(),
+            methods:{
+                to_csv,
+                today,
+                refresh_n(){
+                    render_doc(this)
+                    this.update_time=now()
+                },
+                post_topic(){
+                    let {topic}=this;
+                    console.log(topic)
+                    let {title,content}=topic
+                    if (title == "" || content=="" ) return
+                    let d={created_time:now1(),...topic}
+                    http_post('/doc',d)
+                },
+                save_topic(){
+                    let {topic}=this;
+                    mycache("topic",topic)
+                    console.log(topic)
+                },
+              comment () {
+                    const time = (new Date()).toTimeString()
+                    this.events.push({
+                      text: this.mycomment,
+                      time,
+                    })
+                    this.input = null
+                  },
+            },
+            computed:{ 
+                  timeline () {
+                    return this.events.slice().reverse()
+                  },
+            },
+            created:function(){
+
+
+
+
+            },
+            data: () => ({
+                share:[
+                    { 
+                        "title":"weibo",
+                         f:({content,title,_id:{$oid}})=>'http://v.t.sina.com.cn/share/share.php?'+ new URLSearchParams({
+                            url:location.origin+'/topic.html?id=' + $oid,
+                            name:title,
+                            text:content.slice(0,100),
+                           // image:"",
+                        })
+                    },
+                    /*
+                    {
+                        "title":"douban",
+                        "url":'https://www.douban.com/share/service/?'
+                    },
+                    {
+                        "title":"qq",
+                        "url":'http://connect.qq.com/widget/shareqq/index.html?'
+                    },
+                    {
+                        "title":"qzone",
+                        "url":'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?',
+                    },*/
+                ],
+                doc:[],
+                events:[],
+                mycomment:"",
+                topic:{
+                    title:"",
+                    content:""
+                },
+                selected: [],
+                selected1: [],
+                selected2: [],
+                items1:items,
+                now:"",
+                update_time:  time,
+                from_now:moment(this.update_time).fromNow(),
+                vv:[],
+            }),
+        })
+)
+
+//editor=await ClassicEditor.create(dom)
+
+const init_editor=async(d0="")=>{
+       let dom=document.querySelector( '#editor' )
+       editor=await BalloonEditor.create(dom )
+       editor.setData(d0)
+       const save_comment=()=>{
+           let d=editor.getData()
+           console.log(d)
+           app.topic.content=d
+       }
+       fromEvent(dom,'blur').
+       subscribe(save_comment)
+}
+
+const turn_page=()=>{
+    fromEvent(document.querySelector('#page_down'),'click').
+        subscribe(e=>{
+            let {scrollHeight,scrollTop,offsetHeight}= document.body
+            let { innerHeight,pageYOffset}=window
+            let n=scrollHeight/innerHeight
+            let c=pageYOffset/innerHeight
+            let c1= (c+1 <n ) ? c+1 : c
+            let o1=c1*innerHeight
+            window.scrollTo(0,o1)
+        })
+}    
+
+
+var app;
+const init=async ()=>{
+        app=render()
+        init_app(app)
+        {
+            let refresh1= refresh(app)
+            let REFRESH_INTERVAL=3*60*1e3
+
+            let [a,b]=['focus','blur'].map((x,i)=> fromEvent(window,x).pipe(map(e=>i)))
+            let c=interval(REFRESH_INTERVAL).pipe( takeUntil(b))
+            c.subscribe(refresh1)
+            interval(1e3).pipe( takeUntil(b)).subscribe(say('ccc'))
+            a.subscribe(()=>c.subscribe(refresh1))
+        }
+
+        const clock=()=>{
+            interval(1e3)
+            .pipe(
+                map(x=> now()),
+                )
+            .subscribe((x)=>{
+                app.now=x
+                app.from_now= moment(app.update_time).fromNow()
+                format_vv_time(app)
+            })
+        }
+
+        clock()
+        d0=app.topic.content
+        init_editor(d0)
+        loading('stop')
+        turn_page()
+    }
+    init()
+   </script>
+</html>

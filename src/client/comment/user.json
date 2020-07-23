@@ -1,0 +1,18 @@
+{
+	"data": {
+		"displayName": null,
+		"id": "u_0SV8p29yFOVo",
+		"imageId": "#Red-Candy",
+		"username": "RedCandy",
+		"isModerator": false,
+		"isAdmin": false,
+		"isJournalist": false,
+		"unseenNotificationsCount": 0,
+		"email": null,
+		"isEmailVerified": false,
+		"socialNetworks": [],
+		"isRegistered": false,
+		"isPrivate": false,
+		"isSsoUser": false
+	}
+}
